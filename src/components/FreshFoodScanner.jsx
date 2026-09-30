@@ -58,15 +58,17 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
       } catch (err) {
         if (isMounted) {
           console.warn('Live camera stream not available:', err);
-          const isDenied = err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError' || err.message?.includes('Permission');
+          const errName = err?.name || '';
+          const errMsg = err?.message || String(err);
+          const isDenied = errName === 'NotAllowedError' || errName === 'PermissionDeniedError' || errMsg.includes('Permission') || errMsg.includes('denied');
           const isHttpIp = typeof window !== 'undefined' && location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
 
           if (isDenied) {
-            setCameraError('Camera permission denied. Tap camera/lock icon in address bar to allow camera access.');
+            setCameraError(`Camera permission is BLOCKED (${errName}). To unblock: tap the 🔒/tune icon next to the URL address bar ➔ Site settings ➔ set Camera to ALLOW ➔ refresh page.`);
           } else if (isHttpIp) {
             setCameraError('HTTPS Required: Mobile browsers block camera on HTTP IP addresses. Use HTTPS or localhost.');
           } else {
-            setCameraError('Camera access failed. Check device permissions or use photo upload below.');
+            setCameraError(`Camera error (${errName || 'Failed'}): ${errMsg}. Try photo upload below or check phone browser camera permissions.`);
           }
           setCameraActive(false);
         }
