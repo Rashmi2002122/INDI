@@ -216,7 +216,42 @@ function useBarcodeScanner(onDetected) {
                 () => {}
               );
             } catch (fallbackErr) {
-              console.warn('Fallback camera also failed:', fallbackErr);
+              console.warn('Fallback camera failed:', fallbackErr);
+
+              // 3rd attempt: Enumerate devices directly and pick any available camera deviceId (for PC/USB webcams)
+              try {
+                const devices = await Html5Qrcode.getCameras();
+                if (devices && devices.length > 0) {
+                  console.info('Attempting 3rd fallback with deviceId:', devices[0].id);
+                  try { fallbackInstance.clear(); } catch {}
+
+                  const deviceInstance = new Html5Qrcode(READER_ID, {
+                    formatsToSupport: SCAN_FORMATS,
+                    useBarCodeDetectorIfSupported: false,
+                    verbose: false,
+                  });
+                  scannerRef.current = deviceInstance;
+
+                  await deviceInstance.start(
+                    devices[0].id,
+                    SCAN_CONFIG,
+                    (decodedText) => {
+                      if (handledRef.current) return;
+                      handledRef.current = true;
+                      wantScanRef.current = false;
+                      navigator.vibrate?.(100);
+                      stop();
+                      onDetectedRef.current?.(decodedText);
+                    },
+                    () => {}
+                  );
+                  if (mountedRef.current) setStatus('scanning');
+                  return;
+                }
+              } catch (deviceErr) {
+                console.warn('Device enumeration fallback failed:', deviceErr);
+              }
+
               scannerRef.current = null;
               wantScanRef.current = false;
               if (mountedRef.current) {
