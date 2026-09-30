@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    -webkit-tap-highlight-color: transparent;
+    /* Safe areas for notched devices / gesture navigation */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Prevent overscroll bounce in standalone mode (iOS) */
+  @media all and (display-mode: standalone) {
+    html {
+      overscroll-behavior: none;
+    }
+    body {
+      overscroll-behavior-y: contain;
+    }
+  }
+}
+
+@layer utilities {
+  .pb-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  .pt-safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+}
+
+/* Custom scrollbars for clean look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Custom styling for html5-qrcode reader element */
+#reader video {
+  object-fit: cover !important;
+  border-radius: 1rem !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#reader {
+  border: none !important;
+  background: transparent !important;
+}
+
+#reader img {
+  display: none !important;
+}

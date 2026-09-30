@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <!-- Dark Green Leaf Gradient -->
+    <linearGradient id="leafGreen" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1B3B2B" />
+      <stop offset="50%" stop-color="#2D5A44" />
+      <stop offset="100%" stop-color="#477A5E" />
+    </linearGradient>
+
+    <!-- Warm Bronze/Sun Gradient -->
+    <linearGradient id="sunAmber" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9A5223" />
+      <stop offset="50%" stop-color="#C87236" />
+      <stop offset="100%" stop-color="#E29255" />
+    </linearGradient>
+
+    <!-- Ring Gradient -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#264D39" />
+      <stop offset="70%" stop-color="#3A6B52" />
+      <stop offset="100%" stop-color="#B8713E" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Circular Ring -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="url(#ringGrad)" stroke-width="7" />
+
+  <!-- Sun Rays & Sun Core at top -->
+  <circle cx="100" cy="42" r="9" fill="url(#sunAmber)" />
+  <line x1="100" y1="26" x2="100" y2="29" stroke="#C87236" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="88" y1="31" x2="90" y2="33" stroke="#C87236" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="112" y1="31" x2="110" y2="33" stroke="#C87236" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="83" y1="42" x2="86" y2="42" stroke="#C87236" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="117" y1="42" x2="114" y2="42" stroke="#C87236" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Stylized Figure / Branch Arms reaching up -->
+  <path d="M 100 155 
+           C 96 130, 90 110, 80 92 
+           C 72 78, 62 68, 52 62 
+           C 66 66, 78 78, 88 92 
+           C 95 102, 98 115, 100 135 
+           C 102 115, 105 102, 112 92 
+           C 122 78, 134 66, 148 62 
+           C 138 68, 128 78, 120 92 
+           C 110 110, 104 130, 100 155 Z" 
+        fill="url(#sunAmber)" />
+
+  <!-- Left Main Leaf -->
+  <path d="M 92 135 
+           C 70 125, 45 110, 38 82 
+           C 52 80, 75 92, 88 112 
+           Z" 
+        fill="url(#leafGreen)" />
+  <!-- Left Inner Leaf Vein -->
+  <path d="M 92 135 C 72 120, 52 102, 38 82" stroke="#477A5E" stroke-width="1.5" fill="none" opacity="0.6" />
+
+  <!-- Right Main Leaf -->
+  <path d="M 108 135 
+           C 130 125, 155 110, 162 82 
+           C 148 80, 125 92, 112 112 
+           Z" 
+        fill="url(#leafGreen)" />
+  <!-- Right Inner Leaf Vein -->
+  <path d="M 108 135 C 128 120, 148 102, 162 82" stroke="#477A5E" stroke-width="1.5" fill="none" opacity="0.6" />
+
+  <!-- Left Lower Small Leaf -->
+  <path d="M 85 145 C 65 142, 50 132, 45 120 C 56 118, 72 126, 82 138 Z" fill="#264D39" />
+
+  <!-- Right Lower Small Leaf -->
+  <path d="M 115 145 C 135 142, 150 132, 155 120 C 144 118, 128 126, 118 138 Z" fill="#264D39" />
+
+  <!-- Bottom Intertwined Roots / Base Leaves -->
+  <path d="M 60 162 C 80 176, 120 176, 140 162 C 125 170, 75 170, 60 162 Z" fill="#264D39" />
+</svg>

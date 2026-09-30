@@ -1,0 +1,35 @@
+{
+  "name": "healthscan",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "backend-compile": "D:\\INDI-backend\\tools\\apache-maven-3.9.6\\bin\\mvn.cmd compile -f D:\\INDI-backend\\pom.xml",
+    "backend-run": "D:\\INDI-backend\\tools\\apache-maven-3.9.6\\bin\\mvn.cmd spring-boot:run -f D:\\INDI-backend\\pom.xml",
+    "backend-test": "D:\\INDI-backend\\tools\\apache-maven-3.9.6\\bin\\mvn.cmd test -f D:\\INDI-backend\\pom.xml",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "clsx": "^2.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "html5-qrcode": "^2.3.8",
+    "lucide-react": "^0.344.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-basic-ssl": "^1.0.2",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.1.4",
+    "vite-plugin-pwa": "^1.3.0"
+  }
+}
