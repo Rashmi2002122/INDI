@@ -37,7 +37,6 @@ const QR_BOX = { width: 260, height: 160 };
 const SCAN_CONFIG = {
   fps: 10,
   qrbox: QR_BOX,
-  aspectRatio: 1.0,
   disableFlip: true, // barcodes are never mirrored; halves decode work
 };
 

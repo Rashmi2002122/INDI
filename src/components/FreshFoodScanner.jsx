@@ -53,6 +53,11 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
         if (isMounted && videoRef.current) {
           videoRef.current.srcObject = stream;
           streamRef.current = stream;
+          try {
+            await videoRef.current.play();
+          } catch (pErr) {
+            console.warn('Video play auto-start error:', pErr);
+          }
           setCameraActive(true);
         }
       } catch (err) {
