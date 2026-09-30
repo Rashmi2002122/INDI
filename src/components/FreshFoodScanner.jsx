@@ -39,15 +39,22 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
         setCameraError(null);
         let stream;
         try {
-          // Try rear camera first
+          // 1. Try rear camera (mobile standard)
           stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: { ideal: 'environment' } }
+            video: { facingMode: 'environment' }
           });
-        } catch (rearErr) {
-          // Fall back to any available video stream (webcam/front camera)
-          stream = await navigator.mediaDevices.getUserMedia({
-            video: true
-          });
+        } catch (e1) {
+          try {
+            // 2. Try front camera (mobile/laptop)
+            stream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: 'user' }
+            });
+          } catch (e2) {
+            // 3. Fall back to any available video stream
+            stream = await navigator.mediaDevices.getUserMedia({
+              video: true
+            });
+          }
         }
 
         if (isMounted && videoRef.current) {
