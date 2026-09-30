@@ -40,7 +40,7 @@ const SCAN_CONFIG = {
   disableFlip: true, // barcodes are never mirrored; halves decode work
 };
 
-const DEFAULT_CAMERA = { facingMode: { ideal: 'environment' } };
+const DEFAULT_CAMERA = { facingMode: 'environment' };
 const FALLBACK_CAMERA = { facingMode: 'user' };
 const EMPTY_GOALS = [];
 const DEMO_PRODUCTS = FALLBACK_PRODUCTS.slice(0, 6);
@@ -184,11 +184,25 @@ function useBarcodeScanner(onDetected) {
           console.warn('Primary camera start failed:', err);
           const type = classifyCameraError(err);
 
-          // If primary camera failed and permission was not denied, attempt fallback camera directly
+          try {
+            instance.clear();
+          } catch {
+            /* ignore cleanup error */
+          }
+          scannerRef.current = null;
+
+          // If primary camera failed and permission was not denied, attempt fallback with a fresh instance
           if (type !== 'denied' && type !== 'secure_origin' && source !== FALLBACK_CAMERA) {
             try {
-              console.info('Attempting fallback camera...');
-              await instance.start(
+              console.info('Attempting fallback camera with new instance...');
+              const fallbackInstance = new Html5Qrcode(READER_ID, {
+                formatsToSupport: SCAN_FORMATS,
+                useBarCodeDetectorIfSupported: false,
+                verbose: false,
+              });
+              scannerRef.current = fallbackInstance;
+
+              await fallbackInstance.start(
                 FALLBACK_CAMERA,
                 SCAN_CONFIG,
                 (decodedText) => {
@@ -213,7 +227,6 @@ function useBarcodeScanner(onDetected) {
               return;
             }
           } else {
-            scannerRef.current = null;
             wantScanRef.current = false;
             if (mountedRef.current) {
               setError({ type, ...CAMERA_ERRORS[type] });
