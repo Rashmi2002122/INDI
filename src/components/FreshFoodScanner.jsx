@@ -19,82 +19,76 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
   const streamRef = useRef(null);
   const searchTimeoutRef = useRef(null);
   const searchRequestRef = useRef(0);
+  const isMountedRef = useRef(true);
 
-  // Initialize live video stream for Fresh Food Camera
-  useEffect(() => {
-    let isMounted = true;
+  const startCameraStream = async () => {
+    if (!navigator?.mediaDevices?.getUserMedia) {
+      const isHttpIp = typeof window !== 'undefined' && location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
+      if (isHttpIp) {
+        setCameraError('HTTPS Required: Browsers block camera access on unsecure HTTP IP addresses (e.g. http://192.168.x.x). Test via localhost, HTTPS, or Chrome flags.');
+      } else {
+        setCameraError('Camera API is not supported or is blocked in this browser context.');
+      }
+      setCameraActive(false);
+      return;
+    }
 
-    async function startCameraStream() {
-      // Check for secure origin / getUserMedia support
-      if (!navigator?.mediaDevices?.getUserMedia) {
-        if (isMounted) {
-          const isHttpIp = typeof window !== 'undefined' && location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
-          if (isHttpIp) {
-            setCameraError('HTTPS Required: Browsers block camera access on unsecure HTTP IP addresses (e.g. http://192.168.x.x). Test via localhost, HTTPS, or Chrome flags.');
-          } else {
-            setCameraError('Camera API is not supported or is blocked in this browser context.');
-          }
-          setCameraActive(false);
+    try {
+      setCameraError(null);
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' }
+        });
+      } catch {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user' }
+          });
+        } catch {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true });
         }
+      }
+
+      if (!isMountedRef.current || !videoRef.current) {
+        stream.getTracks().forEach(track => track.stop());
         return;
       }
 
+      videoRef.current.srcObject = stream;
+      streamRef.current = stream;
       try {
-        setCameraError(null);
-        let stream;
-        try {
-          // 1. Try rear camera (mobile standard)
-          stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment' }
-          });
-        } catch (e1) {
-          try {
-            // 2. Try front camera (mobile/laptop)
-            stream = await navigator.mediaDevices.getUserMedia({
-              video: { facingMode: 'user' }
-            });
-          } catch (e2) {
-            // 3. Fall back to any available video stream
-            stream = await navigator.mediaDevices.getUserMedia({
-              video: true
-            });
-          }
-        }
-
-        if (isMounted && videoRef.current) {
-          videoRef.current.srcObject = stream;
-          streamRef.current = stream;
-          try {
-            await videoRef.current.play();
-          } catch (pErr) {
-            console.warn('Video play auto-start error:', pErr);
-          }
-          setCameraActive(true);
-        }
+        await videoRef.current.play();
       } catch (err) {
-        if (isMounted) {
-          console.warn('Live camera stream not available:', err);
-          const errName = err?.name || '';
-          const errMsg = err?.message || String(err);
-          const isDenied = errName === 'NotAllowedError' || errName === 'PermissionDeniedError' || errMsg.includes('Permission') || errMsg.includes('denied');
-          const isHttpIp = typeof window !== 'undefined' && location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
-
-          if (isDenied) {
-            setCameraError(`Camera permission is BLOCKED (${errName}). To unblock: tap the 🔒/tune icon next to the URL address bar ➔ Site settings ➔ set Camera to ALLOW ➔ refresh page.`);
-          } else if (isHttpIp) {
-            setCameraError('HTTPS Required: Mobile browsers block camera on HTTP IP addresses. Use HTTPS or localhost.');
-          } else {
-            setCameraError(`Camera error (${errName || 'Failed'}): ${errMsg}. Try photo upload below or check phone browser camera permissions.`);
-          }
-          setCameraActive(false);
-        }
+        console.warn('Video play auto-start error:', err);
       }
-    }
+      setCameraActive(true);
+    } catch (err) {
+      if (!isMountedRef.current) return;
+      console.warn('Live camera stream not available:', err);
+      const errName = err?.name || '';
+      const errMsg = err?.message || String(err);
+      const isDenied = errName === 'NotAllowedError' || errName === 'PermissionDeniedError' || errMsg.includes('Permission') || errMsg.includes('denied');
+      const isHttpIp = typeof window !== 'undefined' && location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
 
+      if (isDenied) {
+        setCameraError(`Camera permission is BLOCKED (${errName}). To unblock: tap the 🔒/tune icon next to the URL address bar ➔ Site settings ➔ set Camera to ALLOW ➔ refresh page.`);
+      } else if (isHttpIp) {
+        setCameraError('HTTPS Required: Mobile browsers block camera on HTTP IP addresses. Use HTTPS or localhost.');
+      } else {
+        setCameraError(`Camera error (${errName || 'Failed'}): ${errMsg}. Try photo upload below or check phone browser camera permissions.`);
+      }
+      setCameraActive(false);
+    }
+  };
+
+  // Initialize live video stream for Fresh Food Camera
+  useEffect(() => {
+    isMountedRef.current = true;
     startCameraStream();
 
     return () => {
-      isMounted = false;
+      isMountedRef.current = false;
       if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
       searchRequestRef.current += 1;
       stopCameraStream();
