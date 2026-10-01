@@ -10,12 +10,15 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
   const [loading, setLoading] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
   const [cameraError, setCameraError] = useState(null);
+  const [recognitionError, setRecognitionError] = useState(null);
 
   const [recognitionResult, setRecognitionResult] = useState(null);
   const [lowConfidenceMode, setLowConfidenceMode] = useState(false);
 
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+  const searchTimeoutRef = useRef(null);
+  const searchRequestRef = useRef(0);
 
   // Initialize live video stream for Fresh Food Camera
   useEffect(() => {
@@ -92,6 +95,8 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
 
     return () => {
       isMounted = false;
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+      searchRequestRef.current += 1;
       stopCameraStream();
     };
   }, []);
@@ -108,27 +113,47 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
   const handleCaptureFrame = async () => {
     setLoading(true);
     setLowConfidenceMode(false);
+    setRecognitionError(null);
 
     try {
-      // Simulate taking frame from camera or file
+      const video = videoRef.current;
+      if (!video || !video.videoWidth || !video.videoHeight) {
+        throw new Error('Camera is not ready. Please wait for the camera preview and try again.');
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d');
+      if (!context) {
+        throw new Error('Could not capture an image from the camera.');
+      }
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageBase64 = canvas.toDataURL('image/jpeg', 0.85);
       const res = await fetch(`${API_BASE}/fresh-food/recognize`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageBase64: 'captured_frame.jpg' })
+        body: JSON.stringify({ imageBase64 })
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        setRecognitionResult(data);
+      if (!res.ok) {
+        throw new Error(`Backend recognition request failed (${res.status}).`);
+      }
 
+      const data = await res.json();
+      setRecognitionResult(data);
+      if (data.matched && data.foodId) {
         if (data.confidence < 0.70) {
           setLowConfidenceMode(true);
         } else {
           onSelectFreshFood(data.foodId);
         }
+      } else {
+        setRecognitionError(data.message || 'The backend could not identify this food.');
       }
     } catch (err) {
       console.error('Recognition error', err);
+      setRecognitionError(err.message || 'Could not send the image to the backend.');
     } finally {
       setLoading(false);
     }
@@ -140,6 +165,7 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
 
     setLoading(true);
     setLowConfidenceMode(false);
+    setRecognitionError(null);
 
     try {
       const reader = new FileReader();
@@ -158,22 +184,24 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
             body: JSON.stringify({ imageBase64: base64Data, queryHint })
           });
 
-          if (res.ok) {
-            const data = await res.json();
-            setRecognitionResult(data);
+          if (!res.ok) {
+            throw new Error(`Backend recognition request failed (${res.status}).`);
+          }
 
-            if (data.matched && data.foodId) {
-              if (data.confidence < 0.70) {
-                setLowConfidenceMode(true);
-              } else {
-                onSelectFreshFood(data.foodId, 'raw', base64Data);
-              }
-            } else {
+          const data = await res.json();
+          setRecognitionResult(data);
+          if (data.matched && data.foodId) {
+            if (data.confidence < 0.70) {
               setLowConfidenceMode(true);
+            } else {
+              onSelectFreshFood(data.foodId, 'raw', base64Data);
             }
+          } else {
+            setRecognitionError(data.message || 'The backend could not identify this food.');
           }
         } catch (err) {
           console.error('Recognition network error', err);
+          setRecognitionError(err.message || 'Could not send the image to the backend.');
         } finally {
           setLoading(false);
         }
@@ -191,53 +219,63 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
     if (!searchQuery.trim()) return;
 
     setIsSearching(true);
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    searchTimeoutRef.current = null;
+    await searchBackend(searchQuery.trim());
+  };
 
-    // First show instant client-side results
-    const localMatches = searchFreshFoodDatabase(searchQuery);
+  const searchBackend = async (query) => {
+    const requestId = ++searchRequestRef.current;
+    const localMatches = searchFreshFoodDatabase(query);
     setSearchResults(localMatches);
 
-    // Then query backend (which has OpenAI fallback for unknown foods)
     try {
-      const res = await fetch(`${API_BASE}/fresh-food/search?query=${encodeURIComponent(searchQuery)}`);
-      if (res.ok) {
-        const backendResults = await res.json();
-        if (backendResults && backendResults.length > 0) {
-          // Merge: backend results first, then local-only results
-          const backendIds = new Set(backendResults.map(r => (r.slug || r.name || '').toLowerCase()));
-          const uniqueLocal = localMatches.filter(l => !backendIds.has((l.slug || l.id || '').toLowerCase()));
-
-          const merged = backendResults.map(r => ({
-            id: r.slug || r.id?.toString() || r.name?.toLowerCase().replace(/\s+/g, '-'),
-            name: r.name,
-            slug: r.slug,
-            emoji: r.emoji || '🍽️',
-            category: r.category || 'Food',
-            servingSize: r.servingSize || '100g',
-            source: r.source || 'Database',
-          })).concat(uniqueLocal);
-
-          setSearchResults(merged);
-        }
+      const res = await fetch(`${API_BASE}/fresh-food/search?query=${encodeURIComponent(query)}`);
+      if (!res.ok) {
+        throw new Error(`Backend search request failed (${res.status}).`);
       }
+
+      const backendResults = await res.json();
+      if (requestId !== searchRequestRef.current || !backendResults?.length) return;
+
+      const backendIds = new Set(backendResults.map(r => (r.slug || r.name || '').toLowerCase()));
+      const uniqueLocal = localMatches.filter(l => !backendIds.has((l.slug || l.id || '').toLowerCase()));
+      const merged = backendResults.map(r => ({
+        id: r.slug || r.id?.toString() || r.name?.toLowerCase().replace(/\s+/g, '-'),
+        name: r.name,
+        slug: r.slug,
+        emoji: r.emoji || '🍽️',
+        category: r.category || 'Food',
+        servingSize: r.servingSize || '100g',
+        source: r.source || 'Database',
+      })).concat(uniqueLocal);
+
+      setSearchResults(merged);
     } catch (err) {
-      console.warn('Backend search unavailable, using client-side results only', err);
+      if (requestId === searchRequestRef.current) {
+        console.warn('Backend search unavailable, using client-side results only', err);
+      }
     }
   };
 
-  // Live search as user types
-  const handleSearchInputChange = async (e) => {
+  // Search locally immediately, then query the backend after the user pauses typing.
+  const handleSearchInputChange = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
 
-    if (value.trim()) {
-      setIsSearching(true);
-      // Instant local results
-      const localMatches = searchFreshFoodDatabase(value);
-      setSearchResults(localMatches);
-    } else {
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    searchRequestRef.current += 1;
+    if (!value.trim()) {
       setIsSearching(false);
       setSearchResults([]);
+      return;
     }
+
+    setIsSearching(true);
+    setSearchResults(searchFreshFoodDatabase(value));
+    searchTimeoutRef.current = setTimeout(() => {
+      searchBackend(value.trim());
+    }, 300);
   };
 
   return (
@@ -340,6 +378,13 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
           </label>
         </div>
       </div>
+
+      {recognitionError && (
+        <div role="alert" className="flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-medium text-rose-800">
+          <AlertCircle className="h-4 w-4 flex-shrink-0" />
+          <span>{recognitionError}</span>
+        </div>
+      )}
 
       {/* Low Confidence Match Resolution Box */}
       {lowConfidenceMode && recognitionResult && (
