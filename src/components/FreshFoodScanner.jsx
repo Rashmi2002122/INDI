@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Camera, Upload, Search, Sparkles, ChevronRight, AlertCircle, RefreshCw, ArrowLeft, Flashlight, SwitchCamera } from 'lucide-react';
 import { FRESH_FOOD_DATABASE, searchFreshFoodDatabase } from '../data/freshFoodDatabase.js';
+import { API_BASE } from '../services/api';
 
 export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -110,7 +111,7 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
 
     try {
       // Simulate taking frame from camera or file
-      const res = await fetch('/api/fresh-food/recognize', {
+      const res = await fetch(`${API_BASE}/fresh-food/recognize`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imageBase64: 'captured_frame.jpg' })
@@ -151,7 +152,7 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
         const queryHint = isGenericFilename ? null : rawName;
 
         try {
-          const res = await fetch('/api/fresh-food/recognize', {
+          const res = await fetch(`${API_BASE}/fresh-food/recognize`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ imageBase64: base64Data, queryHint })
@@ -197,7 +198,7 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
 
     // Then query backend (which has OpenAI fallback for unknown foods)
     try {
-      const res = await fetch(`/api/fresh-food/search?query=${encodeURIComponent(searchQuery)}`);
+      const res = await fetch(`${API_BASE}/fresh-food/search?query=${encodeURIComponent(searchQuery)}`);
       if (res.ok) {
         const backendResults = await res.json();
         if (backendResults && backendResults.length > 0) {

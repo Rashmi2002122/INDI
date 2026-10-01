@@ -12,9 +12,9 @@ import InstallPrompt from './components/InstallPrompt';
 import PWAUpdatePrompt from './components/PWAUpdatePrompt';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { fetchProductByBarcode as clientFetchProduct, normalizeOFFProduct } from './services/openFoodFacts';
+import { API_BASE } from './services/api';
 import { evaluatePackagedGoals } from './utils/healthAnalyzer';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '')}/api` : '/api';
 const USER_GOALS_KEY = 'healthscan_user_goals';
 const DEFAULT_PREPARATION = 'raw';
 const SCANNER_MODE = {
