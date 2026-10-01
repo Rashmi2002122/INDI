@@ -14,7 +14,7 @@ import { Loader2, AlertCircle } from 'lucide-react';
 import { fetchProductByBarcode as clientFetchProduct, normalizeOFFProduct } from './services/openFoodFacts';
 import { evaluatePackagedGoals } from './utils/healthAnalyzer';
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '')}/api` : '/api';
 const USER_GOALS_KEY = 'healthscan_user_goals';
 const DEFAULT_PREPARATION = 'raw';
 const SCANNER_MODE = {
@@ -77,6 +77,23 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isGoalSetupOpen, setIsGoalSetupOpen] = useState(false);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
+
+  // Keep-alive heartbeat: pings backend /health every 4 mins to keep Render server awake
+  useEffect(() => {
+    const pingServer = async () => {
+      try {
+        await fetch(`${API_BASE}/health`, { method: 'GET', cache: 'no-store' });
+      } catch (e) {
+        try {
+          await fetch(`${API_BASE}/user/goals`, { method: 'GET', cache: 'no-store' });
+        } catch {}
+      }
+    };
+
+    pingServer();
+    const keepAliveInterval = setInterval(pingServer, 4 * 60 * 1000);
+    return () => clearInterval(keepAliveInterval);
+  }, []);
 
   useEffect(() => {
     loadGoals();
