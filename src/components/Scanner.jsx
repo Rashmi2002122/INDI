@@ -2,8 +2,8 @@ import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from '
 import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 import {
   Camera,
-  Flashlight,
-  SwitchCamera,
+  Zap,
+  RefreshCw,
   Barcode,
   Search,
   Sparkles,
@@ -675,7 +675,7 @@ export default function Scanner({
                 title="Switch Camera"
                 aria-label="Switch camera"
               >
-                <SwitchCamera className="w-4 h-4" />
+                <RefreshCw className="w-4 h-4" />
               </button>
             )}
             {isScanning && torchSupported && (
@@ -690,7 +690,7 @@ export default function Scanner({
                 title="Toggle Flash"
                 aria-label="Toggle flash"
               >
-                <Flashlight className="w-4 h-4" />
+                <Zap className="w-4 h-4" />
               </button>
             )}
           </div>

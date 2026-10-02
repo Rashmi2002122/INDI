@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Camera, Upload, Search, Sparkles, ChevronRight, AlertCircle, RefreshCw, ArrowLeft, Flashlight, SwitchCamera } from 'lucide-react';
+import { Camera, Upload, Search, Sparkles, ChevronRight, AlertCircle, RefreshCw, ArrowLeft } from 'lucide-react';
 import { FRESH_FOOD_DATABASE, searchFreshFoodDatabase } from '../data/freshFoodDatabase.js';
 import { API_BASE } from '../services/api';
 
@@ -494,7 +494,7 @@ export default function FreshFoodScanner({ onSelectFreshFood, onBack }) {
               onClick={() => onSelectFreshFood(item.id)}
               className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-800/90 hover:bg-teal-950/80 border border-slate-700 hover:border-teal-500/50 text-center transition-all group space-y-1"
             >
-              <span className="text-2xl group-hover:scale-110 transition-transform">{item.emoji}</span>
+              <span className="text-2xl group-hover:scale-110 transition-transform">{item.image || item.emoji || '🥬'}</span>
               <span className="text-xs font-bold text-slate-200 truncate w-full group-hover:text-teal-300">
                 {item.name}
               </span>
