@@ -1,6 +1,7 @@
 import { getFallbackProduct, FALLBACK_PRODUCTS } from '../data/fallbackProducts';
+import { API_BASE } from './api';
 
-const API_BASE = 'https://world.openfoodfacts.org/api/v2';
+const OFF_API_BASE = 'https://world.openfoodfacts.org/api/v2';
 const SEARCH_BASE = 'https://world.openfoodfacts.org/cgi/search.pl';
 
 /**
@@ -61,32 +62,52 @@ export async function fetchProductByBarcode(barcode) {
   if (!barcode) throw new Error('No barcode provided');
   const cleanBarcode = String(barcode).trim();
 
-  // 1. Check local fallback dataset first for instant response if matched
-  const fallback = getFallbackProduct(cleanBarcode);
-  if (fallback) {
-    return { product: fallback, source: 'Local Cache / Regional DB' };
-  }
-
-  // 2. Fetch from Open Food Facts API
   try {
-    const response = await fetch(`${API_BASE}/product/${cleanBarcode}.json`, {
-      headers: {
-        'User-Agent': 'HealthScan - WebApp - Version 1.0'
-      }
-    });
-
+    const response = await fetch(`${API_BASE}/products/barcode/${cleanBarcode}`);
     if (response.ok) {
       const data = await response.json();
-      if (data.status === 1 && data.product) {
-        const normalized = normalizeOFFProduct(data.product, cleanBarcode);
-        return { product: normalized, source: 'Open Food Facts API' };
+      let rawProduct = data;
+      if (typeof data === 'string') {
+        try { rawProduct = JSON.parse(data); } catch (e) {}
+      }
+      if (rawProduct.product) {
+        return { product: normalizeOFFProduct(rawProduct.product, cleanBarcode), source: 'Aiven MySQL DB / Backend' };
+      }
+      if (rawProduct.status === 1) {
+        return { product: normalizeOFFProduct(rawProduct, cleanBarcode), source: 'Aiven MySQL DB / Backend' };
+      }
+      if (rawProduct.barcode || rawProduct.productName) {
+        return {
+          product: {
+            barcode: rawProduct.barcode || cleanBarcode,
+            name: rawProduct.productName || rawProduct.name || 'Unknown Product',
+            brand: rawProduct.brand || 'Unknown Brand',
+            category: rawProduct.categories || 'Packaged Food',
+            image: rawProduct.image || null,
+            servingSize: rawProduct.servingSize || '100g',
+            servingUnit: 'g',
+            nutriments: {
+              energy100g: rawProduct.energyKcal || 0,
+              sugars100g: rawProduct.sugar || 0,
+              fat100g: rawProduct.fat || 0,
+              saturatedFat100g: rawProduct.saturatedFat || 0,
+              transFat100g: rawProduct.transFat || 0,
+              sodium100g: rawProduct.sodium || 0,
+              protein100g: rawProduct.protein || 0,
+              fiber100g: rawProduct.fiber || 0,
+              carbohydrates100g: rawProduct.carbohydrates || 0
+            },
+            ingredientsText: rawProduct.ingredientsText || '',
+            allergens: rawProduct.allergens ? rawProduct.allergens.split(',') : []
+          },
+          source: 'Aiven MySQL DB'
+        };
       }
     }
   } catch (err) {
-    console.warn('Open Food Facts API request failed, relying on local fallback logic:', err);
+    console.warn('Backend barcode lookup error:', err);
   }
 
-  // 3. If API failed or status != 1, check again fallback
   return { product: null, source: 'None' };
 }
 

@@ -156,6 +156,14 @@ export default function App() {
 
       const data = await response.json();
 
+      if (typeof data === 'string') {
+        try {
+          const parsed = JSON.parse(data);
+          if (parsed.product) return normalizeOFFProduct(parsed.product, barcode);
+          if (parsed.status === 1) return normalizeOFFProduct(parsed, barcode);
+        } catch (e) {}
+      }
+
       if (data.product) {
         return normalizeOFFProduct(data.product, barcode);
       }
@@ -164,16 +172,41 @@ export default function App() {
         return normalizeOFFProduct(data, barcode);
       }
 
+      if (data.barcode || data.productName) {
+        return {
+          barcode: data.barcode || barcode,
+          name: data.productName || data.name || 'Unknown Product',
+          brand: data.brand || 'Unknown Brand',
+          category: data.categories || 'Packaged Food',
+          image: data.image || null,
+          servingSize: data.servingSize || '100g',
+          servingUnit: 'g',
+          nutriments: {
+            energy100g: data.energyKcal || 0,
+            sugars100g: data.sugar || 0,
+            fat100g: data.fat || 0,
+            saturatedFat100g: data.saturatedFat || 0,
+            transFat100g: data.transFat || 0,
+            sodium100g: data.sodium || 0,
+            protein100g: data.protein || 0,
+            fiber100g: data.fiber || 0,
+            carbohydrates100g: data.carbohydrates || 0
+          },
+          ingredientsText: data.ingredientsText || '',
+          allergens: data.allergens ? data.allergens.split(',') : [],
+          offGrade: null
+        };
+      }
+
       return null;
     } catch (error) {
-      console.warn('Backend API offline, falling back to direct client lookup', error);
+      console.warn('Backend API lookup error, falling back to client lookup', error);
       return null;
     }
   };
 
   const fetchBarcodeProductFromClient = async (barcode) => {
-    const response = await clientFetchProduct(barcode);
-    return response && response.product ? response.product : null;
+    return fetchBarcodeProductFromBackend(barcode);
   };
 
   const loadProductAlternatives = async (barcode) => {
@@ -200,14 +233,10 @@ export default function App() {
     setScannerMode(SCANNER_MODE.packaged);
 
     try {
-      let product = await fetchBarcodeProductFromBackend(barcode);
+      const product = await fetchBarcodeProductFromBackend(barcode);
 
       if (!product) {
-        product = await fetchBarcodeProductFromClient(barcode);
-      }
-
-      if (!product) {
-        setErrorMsg(`Product with barcode "${barcode}" not found in database. Try searching by name.`);
+        setErrorMsg(`Product with barcode "${barcode}" not found. Try searching by name or check the barcode number.`);
         return;
       }
 
