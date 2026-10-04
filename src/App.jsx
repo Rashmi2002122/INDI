@@ -78,22 +78,7 @@ export default function App() {
   const [isGoalSetupOpen, setIsGoalSetupOpen] = useState(false);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
 
-  // Keep-alive heartbeat: pings backend /health every 4 mins to keep Render server awake
-  useEffect(() => {
-    const pingServer = async () => {
-      try {
-        await fetch(`${API_BASE}/health`, { method: 'GET', cache: 'no-store' });
-      } catch (e) {
-        try {
-          await fetch(`${API_BASE}/user/goals`, { method: 'GET', cache: 'no-store' });
-        } catch {}
-      }
-    };
 
-    pingServer();
-    const keepAliveInterval = setInterval(pingServer, 4 * 60 * 1000);
-    return () => clearInterval(keepAliveInterval);
-  }, []);
 
   useEffect(() => {
     loadGoals();
