@@ -12,6 +12,7 @@ import InstallPrompt from './components/InstallPrompt';
 import PWAUpdatePrompt from './components/PWAUpdatePrompt';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { fetchProductByBarcode as clientFetchProduct, normalizeOFFProduct } from './services/openFoodFacts';
+import { getFallbackProduct } from './data/fallbackProducts';
 import { API_BASE } from './services/api';
 import { evaluatePackagedGoals } from './utils/healthAnalyzer';
 
@@ -218,7 +219,16 @@ export default function App() {
     setScannerMode(SCANNER_MODE.packaged);
 
     try {
-      const product = await fetchBarcodeProductFromBackend(barcode);
+      let product = await fetchBarcodeProductFromBackend(barcode);
+
+      // If backend (Aiven MySQL + Open Food Facts API) does not have this barcode,
+      // fallback to the regional demo products catalog (e.g. Amul Paneer demo barcode)
+      if (!product) {
+        const localItem = getFallbackProduct(barcode);
+        if (localItem) {
+          product = localItem;
+        }
+      }
 
       if (!product) {
         setErrorMsg(`Product with barcode "${barcode}" not found. Try searching by name or check the barcode number.`);
