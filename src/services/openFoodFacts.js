@@ -105,7 +105,47 @@ export async function fetchProductByBarcode(barcode) {
       }
     }
   } catch (err) {
-    console.warn('Backend barcode lookup error:', err);
+    console.warn('Backend barcode lookup error, attempting direct client fetch:', err);
+  }
+
+  // Tier 2: Direct Browser Fetch to Open Food Facts (bypasses Render IP block & uses user's browser session)
+  try {
+    const offUrls = [
+      `https://world.openfoodfacts.org/api/v2/product/${cleanBarcode}.json`,
+      `https://world.openfoodfacts.org/api/v0/product/${cleanBarcode}.json`
+    ];
+
+    for (const url of offUrls) {
+      try {
+        const offRes = await fetch(url);
+        if (offRes.ok) {
+          const offData = await offRes.json();
+          if ((offData.status === 1 || offData.product) && offData.product) {
+            // Asynchronously cache this product into Aiven MySQL via backend
+            fetch(`${API_BASE}/products/cache`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ barcode: cleanBarcode, rawJson: JSON.stringify(offData) })
+            }).catch(() => {});
+
+            return {
+              product: normalizeOFFProduct(offData.product, cleanBarcode),
+              source: 'Open Food Facts (Live + Cached to Aiven)'
+            };
+          }
+        }
+      } catch (innerErr) {
+        // Continue to next URL
+      }
+    }
+  } catch (clientErr) {
+    console.warn('Direct Open Food Facts client lookup failed:', clientErr);
+  }
+
+  // Tier 3: Check regional demo/fallback dataset
+  const fallback = getFallbackProduct(cleanBarcode);
+  if (fallback) {
+    return { product: fallback, source: 'Regional Catalog' };
   }
 
   return { product: null, source: 'None' };

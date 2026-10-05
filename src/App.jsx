@@ -221,13 +221,17 @@ export default function App() {
     try {
       let product = await fetchBarcodeProductFromBackend(barcode);
 
-      // If backend (Aiven MySQL + Open Food Facts API) does not have this barcode,
-      // fallback to the regional demo products catalog (e.g. Amul Paneer demo barcode)
+      // If backend was unable to find or connect (e.g. Render IP rate-limit), fetch via client and auto-cache
       if (!product) {
-        const localItem = getFallbackProduct(barcode);
-        if (localItem) {
-          product = localItem;
+        const clientRes = await clientFetchProduct(barcode);
+        if (clientRes && clientRes.product) {
+          product = clientRes.product;
         }
+      }
+
+      // If still not found, check regional catalog
+      if (!product) {
+        product = getFallbackProduct(barcode);
       }
 
       if (!product) {
