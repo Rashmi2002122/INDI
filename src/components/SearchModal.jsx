@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Search, Loader2, Scale, ChevronRight } from 'lucide-react';
 import { searchProductsByName } from '../services/openFoodFacts';
+import { getProductImage, getCategoryFallbackImage } from '../utils/productImages';
 
 export default function SearchModal({ isOpen, onClose, onSelectProduct }) {
   const [query, setQuery] = useState('');
@@ -90,9 +91,13 @@ export default function SearchModal({ isOpen, onClose, onSelectProduct }) {
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <img
-                    src={product.image || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=200&q=80'}
+                    src={getProductImage(product)}
                     alt={product.name}
                     className="w-10 h-10 rounded-xl object-cover bg-slate-100 flex-shrink-0"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = getCategoryFallbackImage(product);
+                    }}
                   />
                   <div className="min-w-0 flex-1">
                     <h4 className="text-xs font-extrabold text-slate-900 truncate group-hover:text-emerald-700 transition-colors">

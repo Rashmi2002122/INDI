@@ -158,28 +158,28 @@ export default function App() {
         return normalizeOFFProduct(data, barcode);
       }
 
-      if (data.barcode || data.productName) {
+      if (data.barcode || data.productName || data.product_name) {
         return {
           barcode: data.barcode || barcode,
-          name: data.productName || data.name || 'Unknown Product',
+          name: data.product_name || data.productName || data.name || 'Unknown Product',
           brand: data.brand || 'Unknown Brand',
-          category: data.categories || 'Packaged Food',
-          image: data.image || null,
-          servingSize: data.servingSize || '100g',
+          category: data.categories || data.category || 'Packaged Food',
+          image: data.image_url || data.image || data.imageUrl || null,
+          servingSize: data.serving_size || data.servingSize || '100g',
           servingUnit: 'g',
           nutriments: {
-            energy100g: data.energyKcal || 0,
-            sugars100g: data.sugar || 0,
-            fat100g: data.fat || 0,
-            saturatedFat100g: data.saturatedFat || 0,
-            transFat100g: data.transFat || 0,
-            sodium100g: data.sodium || 0,
-            protein100g: data.protein || 0,
-            fiber100g: data.fiber || 0,
-            carbohydrates100g: data.carbohydrates || 0
+            energy100g: data.energyKcal ?? data.energy_kcal ?? 0,
+            sugars100g: data.sugar ?? data.sugars ?? 0,
+            fat100g: data.fat ?? 0,
+            saturatedFat100g: data.saturatedFat ?? data.saturated_fat ?? 0,
+            transFat100g: data.transFat ?? data.trans_fat ?? 0,
+            sodium100g: data.sodium ?? 0,
+            protein100g: data.protein ?? 0,
+            fiber100g: data.fiber ?? 0,
+            carbohydrates100g: data.carbohydrates ?? 0
           },
-          ingredientsText: data.ingredientsText || '',
-          allergens: data.allergens ? data.allergens.split(',') : [],
+          ingredientsText: data.ingredients_text || data.ingredientsText || '',
+          allergens: Array.isArray(data.allergens) ? data.allergens : (data.allergens ? data.allergens.split(',').map(s => s.trim()) : []),
           offGrade: null
         };
       }
