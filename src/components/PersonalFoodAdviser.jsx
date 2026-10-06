@@ -27,6 +27,7 @@ import {
   getRecommendedRecipes, 
   ADVISER_TIPS 
 } from '../data/recipesAdviserDatabase';
+import { API_BASE } from '../services/api';
 
 const ADVISER_PROFILE_KEY = 'indi_food_adviser_profile';
 
@@ -131,11 +132,51 @@ export default function PersonalFoodAdviser({ onBack }) {
     updateProfile({ eatenFoods: profile.eatenFoods.filter(e => e !== item) });
   };
 
-  // Fetch Recommended Recipes for active slot
+  // Fetch Recommended Recipes for active slot (Live from Aiven MySQL via Spring Boot with offline fallback)
+  const [backendRecipes, setBackendRecipes] = useState(null);
+
+  useEffect(() => {
+    let isCancelled = false;
+    const fetchRecipes = async () => {
+      try {
+        const params = new URLSearchParams({
+          slot: selectedSlotId,
+          dietType: profile.dietType,
+          goal: profile.goal,
+          limit: '3'
+        });
+        if (profile.allergies?.length) {
+          params.set('allergies', profile.allergies.join(','));
+        }
+        if (profile.eatenFoods?.length) {
+          params.set('eatenFoods', profile.eatenFoods.join(','));
+        }
+
+        const res = await fetch(`${API_BASE}/recipes/recommend?${params.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (!isCancelled && Array.isArray(data) && data.length > 0) {
+            setBackendRecipes(data);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Backend recipes API offline, serving from local cache:', err);
+      }
+      if (!isCancelled) setBackendRecipes(null);
+    };
+
+    fetchRecipes();
+    return () => { isCancelled = true; };
+  }, [selectedSlotId, profile.dietType, profile.goal, profile.allergies, profile.eatenFoods, seed]);
+
   const currentSlotMeta = ALL_SLOTS.find(s => s.id === selectedSlotId) || ALL_SLOTS[0];
   const recommendedRecipes = useMemo(() => {
+    if (backendRecipes && backendRecipes.length > 0) {
+      return backendRecipes;
+    }
     return getRecommendedRecipes(selectedSlotId, profile, 3);
-  }, [selectedSlotId, profile, seed]);
+  }, [backendRecipes, selectedSlotId, profile, seed]);
 
   // Greeting Message generator
   const getGreeting = () => {
