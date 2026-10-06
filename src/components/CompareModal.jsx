@@ -1,6 +1,5 @@
 import React from 'react';
 import { X, Scale, Sparkles, CheckCircle2 } from 'lucide-react';
-import { getProductImage, getCategoryFallbackImage } from '../utils/productImages';
 
 export default function CompareModal({ isOpen, onClose, scannedProduct, alternatives = [], onSelectAlternative }) {
   if (!isOpen || !scannedProduct) return null;
@@ -48,13 +47,9 @@ export default function CompareModal({ isOpen, onClose, scannedProduct, alternat
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <img
-                        src={getProductImage(alt)}
+                        src={alt.image || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=200&q=80'}
                         alt={alt.name}
                         className="w-10 h-10 rounded-xl object-cover bg-white border border-slate-200 flex-shrink-0"
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = getCategoryFallbackImage(alt);
-                        }}
                       />
                       <div>
                         <h4 className="text-xs font-extrabold text-slate-900">{alt.name}</h4>

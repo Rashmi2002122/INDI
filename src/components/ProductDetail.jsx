@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ShieldAlert, AlertTriangle, CheckCircle2, Info, Sparkles, Scale, Heart, Calendar, Share2, CornerDownRight, ChevronDown, ChevronUp, Layers, Award, Leaf } from 'lucide-react';
 import { evaluateNutrientFlags, extractAllergens } from '../utils/healthAnalyzer';
-import { getProductImage, getCategoryFallbackImage } from '../utils/productImages';
 import ProvenanceBadge from './ProvenanceBadge';
 
 export default function ProductDetail({ product, evaluation, onBack, onOpenCompare }) {
@@ -92,16 +91,15 @@ export default function ProductDetail({ product, evaluation, onBack, onOpenCompa
       {/* Hero Card */}
       <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 space-y-4 relative overflow-hidden">
         <div className="flex gap-4">
-          <div className="w-24 h-24 rounded-2xl bg-slate-100 border border-slate-200 flex-shrink-0 overflow-hidden flex items-center justify-center p-0.5 bg-white shadow-inner">
-            <img
-              src={getProductImage(product)}
-              alt={product.name || 'Product'}
-              className="w-full h-full object-cover rounded-xl"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = getCategoryFallbackImage(product);
-              }}
-            />
+          <div className="w-24 h-24 rounded-2xl bg-slate-100 border border-slate-200 flex-shrink-0 overflow-hidden flex items-center justify-center p-1">
+            {product.image ? (
+              <img src={product.image} alt={product.name} className="w-full h-full object-contain rounded-xl" />
+            ) : (
+              <div className="text-center p-2">
+                <Scale className="w-8 h-8 text-slate-400 mx-auto mb-1" />
+                <span className="text-[9px] text-slate-400 font-semibold">No Image</span>
+              </div>
+            )}
           </div>
 
           <div className="flex-1 min-w-0 space-y-1">

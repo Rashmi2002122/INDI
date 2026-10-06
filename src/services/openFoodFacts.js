@@ -76,29 +76,29 @@ export async function fetchProductByBarcode(barcode) {
       if (rawProduct.status === 1) {
         return { product: normalizeOFFProduct(rawProduct, cleanBarcode), source: 'Aiven MySQL DB / Backend' };
       }
-      if (rawProduct.barcode || rawProduct.productName || rawProduct.product_name) {
+      if (rawProduct.barcode || rawProduct.productName) {
         return {
           product: {
             barcode: rawProduct.barcode || cleanBarcode,
-            name: rawProduct.product_name || rawProduct.productName || rawProduct.name || 'Unknown Product',
+            name: rawProduct.productName || rawProduct.name || 'Unknown Product',
             brand: rawProduct.brand || 'Unknown Brand',
-            category: rawProduct.categories || rawProduct.category || 'Packaged Food',
-            image: rawProduct.image_url || rawProduct.image || rawProduct.imageUrl || null,
-            servingSize: rawProduct.serving_size || rawProduct.servingSize || '100g',
+            category: rawProduct.categories || 'Packaged Food',
+            image: rawProduct.image || null,
+            servingSize: rawProduct.servingSize || '100g',
             servingUnit: 'g',
             nutriments: {
-              energy100g: rawProduct.energyKcal ?? rawProduct.energy_kcal ?? 0,
-              sugars100g: rawProduct.sugar ?? rawProduct.sugars ?? 0,
-              fat100g: rawProduct.fat ?? 0,
-              saturatedFat100g: rawProduct.saturatedFat ?? rawProduct.saturated_fat ?? 0,
-              transFat100g: rawProduct.transFat ?? rawProduct.trans_fat ?? 0,
-              sodium100g: rawProduct.sodium ?? 0,
-              protein100g: rawProduct.protein ?? 0,
-              fiber100g: rawProduct.fiber ?? 0,
-              carbohydrates100g: rawProduct.carbohydrates ?? 0
+              energy100g: rawProduct.energyKcal || 0,
+              sugars100g: rawProduct.sugar || 0,
+              fat100g: rawProduct.fat || 0,
+              saturatedFat100g: rawProduct.saturatedFat || 0,
+              transFat100g: rawProduct.transFat || 0,
+              sodium100g: rawProduct.sodium || 0,
+              protein100g: rawProduct.protein || 0,
+              fiber100g: rawProduct.fiber || 0,
+              carbohydrates100g: rawProduct.carbohydrates || 0
             },
-            ingredientsText: rawProduct.ingredients_text || rawProduct.ingredientsText || '',
-            allergens: Array.isArray(rawProduct.allergens) ? rawProduct.allergens : (rawProduct.allergens ? rawProduct.allergens.split(',').map(s => s.trim()) : [])
+            ingredientsText: rawProduct.ingredientsText || '',
+            allergens: rawProduct.allergens ? rawProduct.allergens.split(',') : []
           },
           source: 'Aiven MySQL DB'
         };
