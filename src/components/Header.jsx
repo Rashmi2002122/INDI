@@ -1,7 +1,9 @@
 import React from 'react';
-import { QrCode, Search, Target, Activity, Apple } from 'lucide-react';
+import { QrCode, Search, Target, ChefHat } from 'lucide-react';
 
 export default function Header({ scannerMode, setScannerMode, activeTab, setActiveTab, onOpenSearch, onOpenGoalSetup, goalsCount = 0 }) {
+  const isAdviserMode = scannerMode === 'adviser' || scannerMode === 'fresh';
+
   return (
     <header className="sticky top-0 z-30 bg-slate-900 text-white shadow-md border-b border-slate-800">
       <div className="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
@@ -22,7 +24,7 @@ export default function Header({ scannerMode, setScannerMode, activeTab, setActi
               INDI <span className="text-emerald-400 font-semibold text-xs tracking-wider uppercase">Integrative Health</span>
             </h1>
             <p className="text-[10px] text-slate-400 font-medium tracking-wide uppercase mt-0.5">
-              {scannerMode === 'fresh' ? 'Fresh Food Scanner' : 'Barcode & Food Analyzer'}
+              {isAdviserMode ? 'Personal Food Adviser' : 'Barcode & Food Analyzer'}
             </p>
           </div>
         </div>
@@ -71,17 +73,17 @@ export default function Header({ scannerMode, setScannerMode, activeTab, setActi
 
             <button
               onClick={() => {
-                setScannerMode('fresh');
+                setScannerMode('adviser');
                 setActiveTab('scanner');
               }}
               className={`p-1.5 rounded-lg text-xs font-semibold transition-all ${
-                scannerMode === 'fresh' && activeTab === 'scanner'
-                  ? 'bg-teal-500 text-slate-950 shadow-md font-bold'
+                isAdviserMode && activeTab === 'scanner'
+                  ? 'bg-emerald-500 text-slate-950 shadow-md font-bold'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
-              title="Fresh Food Camera Scanner"
+              title="Personal Food Adviser"
             >
-              <Apple className="w-4 h-4" />
+              <ChefHat className="w-4 h-4" />
             </button>
           </div>
         </div>

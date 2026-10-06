@@ -3,6 +3,29 @@ import { ArrowLeft, ShieldAlert, AlertTriangle, CheckCircle2, Info, Sparkles, Sc
 import { evaluateNutrientFlags, extractAllergens } from '../utils/healthAnalyzer';
 import ProvenanceBadge from './ProvenanceBadge';
 
+const getCategoryFallbackImage = (category = '', name = '') => {
+  const text = `${category} ${name}`.toLowerCase();
+  if (text.includes('biscuit') || text.includes('cookie') || text.includes('bakery')) {
+    return 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=300&q=80';
+  }
+  if (text.includes('snack') || text.includes('chip') || text.includes('namkeen') || text.includes('bhujia')) {
+    return 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=300&q=80';
+  }
+  if (text.includes('milk') || text.includes('dairy') || text.includes('paneer') || text.includes('curd') || text.includes('butter')) {
+    return 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=300&q=80';
+  }
+  if (text.includes('noodle') || text.includes('pasta') || text.includes('instant') || text.includes('maggi')) {
+    return 'https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&w=300&q=80';
+  }
+  if (text.includes('juice') || text.includes('beverage') || text.includes('drink') || text.includes('tea') || text.includes('coffee')) {
+    return 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80';
+  }
+  if (text.includes('chocolate') || text.includes('sweet') || text.includes('candy')) {
+    return 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=300&q=80';
+  }
+  return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80';
+};
+
 export default function ProductDetail({ product, evaluation, onBack, onOpenCompare }) {
   const [viewServing, setViewServing] = useState(false);
   const [expandedGoal, setExpandedGoal] = useState(null);
@@ -91,15 +114,16 @@ export default function ProductDetail({ product, evaluation, onBack, onOpenCompa
       {/* Hero Card */}
       <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 space-y-4 relative overflow-hidden">
         <div className="flex gap-4">
-          <div className="w-24 h-24 rounded-2xl bg-slate-100 border border-slate-200 flex-shrink-0 overflow-hidden flex items-center justify-center p-1">
-            {product.image ? (
-              <img src={product.image} alt={product.name} className="w-full h-full object-contain rounded-xl" />
-            ) : (
-              <div className="text-center p-2">
-                <Scale className="w-8 h-8 text-slate-400 mx-auto mb-1" />
-                <span className="text-[9px] text-slate-400 font-semibold">No Image</span>
-              </div>
-            )}
+          <div className="w-24 h-24 rounded-2xl bg-slate-100 border border-slate-200 flex-shrink-0 overflow-hidden flex items-center justify-center p-1 bg-white">
+            <img 
+              src={product.image || getCategoryFallbackImage(product.category, product.name)} 
+              alt={product.name} 
+              className="w-full h-full object-contain rounded-xl"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = getCategoryFallbackImage(product.category, product.name);
+              }}
+            />
           </div>
 
           <div className="flex-1 min-w-0 space-y-1">

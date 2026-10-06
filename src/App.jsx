@@ -3,8 +3,7 @@ import Header from './components/Header';
 import ScannerChoiceView from './components/ScannerChoiceView';
 import Scanner from './components/Scanner';
 import ProductDetail from './components/ProductDetail';
-import FreshFoodScanner from './components/FreshFoodScanner';
-import FreshFoodDetail from './components/FreshFoodDetail';
+import PersonalFoodAdviser from './components/PersonalFoodAdviser';
 import SearchModal from './components/SearchModal';
 import GoalSetupModal from './components/GoalSetupModal';
 import CompareModal from './components/CompareModal';
@@ -21,7 +20,8 @@ const DEFAULT_PREPARATION = 'raw';
 const SCANNER_MODE = {
   choice: 'choice',
   packaged: 'packaged',
-  fresh: 'fresh'
+  adviser: 'adviser',
+  fresh: 'adviser'
 };
 const ACTIVE_TAB = {
   scanner: 'scanner',
@@ -158,28 +158,28 @@ export default function App() {
         return normalizeOFFProduct(data, barcode);
       }
 
-      if (data.barcode || data.productName) {
+      if (data.barcode || data.productName || data.product_name) {
         return {
           barcode: data.barcode || barcode,
-          name: data.productName || data.name || 'Unknown Product',
+          name: data.product_name || data.productName || data.name || 'Unknown Product',
           brand: data.brand || 'Unknown Brand',
-          category: data.categories || 'Packaged Food',
-          image: data.image || null,
-          servingSize: data.servingSize || '100g',
+          category: data.categories || data.category || 'Packaged Food',
+          image: data.image_url || data.image || data.imageUrl || null,
+          servingSize: data.serving_size || data.servingSize || '100g',
           servingUnit: 'g',
           nutriments: {
-            energy100g: data.energyKcal || 0,
-            sugars100g: data.sugar || 0,
-            fat100g: data.fat || 0,
-            saturatedFat100g: data.saturatedFat || 0,
-            transFat100g: data.transFat || 0,
-            sodium100g: data.sodium || 0,
-            protein100g: data.protein || 0,
-            fiber100g: data.fiber || 0,
-            carbohydrates100g: data.carbohydrates || 0
+            energy100g: data.energyKcal ?? data.energy_kcal ?? 0,
+            sugars100g: data.sugar ?? data.sugars ?? 0,
+            fat100g: data.fat ?? 0,
+            saturatedFat100g: data.saturatedFat ?? data.saturated_fat ?? 0,
+            transFat100g: data.transFat ?? data.trans_fat ?? 0,
+            sodium100g: data.sodium ?? 0,
+            protein100g: data.protein ?? 0,
+            fiber100g: data.fiber ?? 0,
+            carbohydrates100g: data.carbohydrates ?? 0
           },
-          ingredientsText: data.ingredientsText || '',
-          allergens: data.allergens ? data.allergens.split(',') : [],
+          ingredientsText: data.ingredients_text || data.ingredientsText || '',
+          allergens: data.allergens ? (Array.isArray(data.allergens) ? data.allergens : data.allergens.split(',').map(s => s.trim())) : [],
           offGrade: null
         };
       }
@@ -417,9 +417,8 @@ export default function App() {
               />
             )}
 
-            {scannerMode === SCANNER_MODE.fresh && (
-              <FreshFoodScanner
-                onSelectFreshFood={(foodId) => handleSelectFreshFood(foodId, DEFAULT_PREPARATION)}
+            {(scannerMode === SCANNER_MODE.adviser || scannerMode === 'fresh') && (
+              <PersonalFoodAdviser
                 onBack={() => setScannerMode(SCANNER_MODE.choice)}
               />
             )}
@@ -434,18 +433,6 @@ export default function App() {
                 evaluation={evaluation}
                 onBack={() => setActiveTab(ACTIVE_TAB.scanner)}
                 onOpenCompare={() => setIsCompareOpen(true)}
-              />
-            )}
-
-            {scannerMode === SCANNER_MODE.fresh && (
-              <FreshFoodDetail
-                food={freshFood}
-                evaluation={freshEvaluation}
-                selectedPrep={freshPreparation}
-                onChangePreparation={(prepId) => handleSelectFreshFood(freshFood.id, prepId)}
-                onBack={() => setActiveTab(ACTIVE_TAB.scanner)}
-                alternatives={freshAlternatives}
-                recipes={freshRecipes}
               />
             )}
           </>
