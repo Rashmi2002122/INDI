@@ -569,16 +569,40 @@ export default function PersonalFoodAdviser({ onBack }) {
                 key={recipe.id}
                 className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-4 hover:shadow-md transition-shadow relative overflow-hidden"
               >
-                {/* Option Number Tag */}
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                    Option {idx + 1}
-                  </span>
+                {/* Dish Photo Banner with Floating Badges */}
+                {recipe.imageUrl ? (
+                  <div className="relative w-full h-44 -mt-1 rounded-2xl overflow-hidden bg-slate-100 group shadow-sm">
+                    <img 
+                      src={recipe.imageUrl} 
+                      alt={recipe.name} 
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+                    
+                    {/* Floating Option Badge */}
+                    <span className="absolute top-3 left-3 text-[10px] font-extrabold uppercase tracking-wider text-emerald-950 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm border border-white/40">
+                      Option {idx + 1}
+                    </span>
 
-                  <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-slate-400" /> {recipe.timeToMake}
-                  </span>
-                </div>
+                    {/* Floating Time Pill */}
+                    <span className="absolute bottom-3 right-3 text-[11px] font-black text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-xl shadow-sm flex items-center gap-1.5 border border-white/20">
+                      <Clock className="w-3.5 h-3.5 text-emerald-300" /> {recipe.timeToMake}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                      Option {idx + 1}
+                    </span>
+                    <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-slate-400" /> {recipe.timeToMake}
+                    </span>
+                  </div>
+                )}
 
                 {/* Recipe Title & Why It Fits */}
                 <div className="space-y-1.5">

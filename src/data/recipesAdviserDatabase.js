@@ -45,7 +45,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 16
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-moong-chilla",
@@ -84,7 +85,8 @@ export const ADVISER_RECIPES = [
       "carbs": 38,
       "fat": 5
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-poha",
@@ -126,7 +128,8 @@ export const ADVISER_RECIPES = [
       "carbs": 54,
       "fat": 8
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-besan-chilla",
@@ -165,7 +168,8 @@ export const ADVISER_RECIPES = [
       "carbs": 32,
       "fat": 12
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-nonveg-egg-bhurji",
@@ -207,7 +211,8 @@ export const ADVISER_RECIPES = [
       "carbs": 22,
       "fat": 17
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-nonveg-boiled-eggs-avocado",
@@ -246,7 +251,8 @@ export const ADVISER_RECIPES = [
       "carbs": 18,
       "fat": 14
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-nonveg-chicken-sandwich",
@@ -284,7 +290,8 @@ export const ADVISER_RECIPES = [
       "carbs": 36,
       "fat": 10
     },
-    "timeToMake": "14 minutes"
+    "timeToMake": "14 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-idli-sambar",
@@ -319,7 +326,8 @@ export const ADVISER_RECIPES = [
       "carbs": 56,
       "fat": 4
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-ragi-dosa",
@@ -357,7 +365,8 @@ export const ADVISER_RECIPES = [
       "carbs": 46,
       "fat": 5
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-oats-upma",
@@ -398,7 +407,8 @@ export const ADVISER_RECIPES = [
       "carbs": 44,
       "fat": 8
     },
-    "timeToMake": "14 minutes"
+    "timeToMake": "14 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-dalia-upma",
@@ -439,7 +449,8 @@ export const ADVISER_RECIPES = [
       "carbs": 50,
       "fat": 5
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-vegan-tofu-scramble",
@@ -481,7 +492,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 13
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-nonveg-egg-white-omelette",
@@ -520,7 +532,8 @@ export const ADVISER_RECIPES = [
       "carbs": 16,
       "fat": 8
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1510693206972-df098062cb71?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-sprouts-poha",
@@ -558,7 +571,8 @@ export const ADVISER_RECIPES = [
       "carbs": 48,
       "fat": 5
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-dosa-sambar",
@@ -592,7 +606,8 @@ export const ADVISER_RECIPES = [
       "carbs": 50,
       "fat": 6
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-nonveg-akuri",
@@ -632,7 +647,8 @@ export const ADVISER_RECIPES = [
       "carbs": 18,
       "fat": 19
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-paneer-paratha",
@@ -668,7 +684,8 @@ export const ADVISER_RECIPES = [
       "carbs": 42,
       "fat": 15
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-vegan-soya-bhurji",
@@ -708,7 +725,8 @@ export const ADVISER_RECIPES = [
       "carbs": 28,
       "fat": 8
     },
-    "timeToMake": "14 minutes"
+    "timeToMake": "14 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-uttapam",
@@ -743,7 +761,8 @@ export const ADVISER_RECIPES = [
       "carbs": 56,
       "fat": 6
     },
-    "timeToMake": "14 minutes"
+    "timeToMake": "14 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-nonveg-egg-appam",
@@ -777,7 +796,8 @@ export const ADVISER_RECIPES = [
       "carbs": 48,
       "fat": 12
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-veg-methi-thepla",
@@ -813,7 +833,8 @@ export const ADVISER_RECIPES = [
       "carbs": 42,
       "fat": 9
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bf-nonveg-chicken-poha",
@@ -849,7 +870,8 @@ export const ADVISER_RECIPES = [
       "carbs": 42,
       "fat": 10
     },
-    "timeToMake": "14 minutes"
+    "timeToMake": "14 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-moong-sprouts-chaat",
@@ -887,7 +909,8 @@ export const ADVISER_RECIPES = [
       "carbs": 26,
       "fat": 1
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-nonveg-boiled-eggs-pepper",
@@ -923,7 +946,8 @@ export const ADVISER_RECIPES = [
       "carbs": 1,
       "fat": 10
     },
-    "timeToMake": "8 minutes"
+    "timeToMake": "8 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-roasted-makhana",
@@ -959,7 +983,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 3
     },
-    "timeToMake": "6 minutes"
+    "timeToMake": "6 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-kala-chana-chaat",
@@ -995,7 +1020,8 @@ export const ADVISER_RECIPES = [
       "carbs": 30,
       "fat": 3
     },
-    "timeToMake": "7 minutes"
+    "timeToMake": "7 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-hung-curd-walnuts",
@@ -1032,7 +1058,8 @@ export const ADVISER_RECIPES = [
       "carbs": 7,
       "fat": 11
     },
-    "timeToMake": "3 minutes"
+    "timeToMake": "3 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-buttermilk-chia",
@@ -1068,7 +1095,8 @@ export const ADVISER_RECIPES = [
       "carbs": 9,
       "fat": 5
     },
-    "timeToMake": "4 minutes"
+    "timeToMake": "4 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-steamed-dhokla",
@@ -1102,7 +1130,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 4
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-peanut-chaat",
@@ -1139,7 +1168,8 @@ export const ADVISER_RECIPES = [
       "carbs": 12,
       "fat": 15
     },
-    "timeToMake": "6 minutes"
+    "timeToMake": "6 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-soya-tikki",
@@ -1176,7 +1206,8 @@ export const ADVISER_RECIPES = [
       "carbs": 14,
       "fat": 4
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-fruit-chaat",
@@ -1211,7 +1242,8 @@ export const ADVISER_RECIPES = [
       "carbs": 28,
       "fat": 0
     },
-    "timeToMake": "4 minutes"
+    "timeToMake": "4 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1519996529931-28324d5a630e?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-paneer-cubes",
@@ -1247,7 +1279,8 @@ export const ADVISER_RECIPES = [
       "carbs": 3,
       "fat": 14
     },
-    "timeToMake": "2 minutes"
+    "timeToMake": "2 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-nonveg-chicken-salad",
@@ -1279,7 +1312,8 @@ export const ADVISER_RECIPES = [
       "carbs": 3,
       "fat": 3
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-ragi-buttermilk",
@@ -1315,7 +1349,8 @@ export const ADVISER_RECIPES = [
       "carbs": 22,
       "fat": 2
     },
-    "timeToMake": "8 minutes"
+    "timeToMake": "8 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-almonds-dates",
@@ -1352,7 +1387,8 @@ export const ADVISER_RECIPES = [
       "carbs": 18,
       "fat": 7
     },
-    "timeToMake": "2 minutes"
+    "timeToMake": "2 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-roasted-chana",
@@ -1386,7 +1422,8 @@ export const ADVISER_RECIPES = [
       "carbs": 20,
       "fat": 2
     },
-    "timeToMake": "3 minutes"
+    "timeToMake": "3 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-sprouted-methi",
@@ -1421,7 +1458,8 @@ export const ADVISER_RECIPES = [
       "carbs": 23,
       "fat": 1
     },
-    "timeToMake": "3 minutes"
+    "timeToMake": "3 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-nonveg-egg-white-salad",
@@ -1456,7 +1494,8 @@ export const ADVISER_RECIPES = [
       "carbs": 1,
       "fat": 0
     },
-    "timeToMake": "4 minutes"
+    "timeToMake": "4 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "mm-veg-coconut-water",
@@ -1490,7 +1529,8 @@ export const ADVISER_RECIPES = [
       "carbs": 15,
       "fat": 5
     },
-    "timeToMake": "2 minutes"
+    "timeToMake": "2 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-rajma-chawal",
@@ -1526,7 +1566,8 @@ export const ADVISER_RECIPES = [
       "carbs": 74,
       "fat": 6
     },
-    "timeToMake": "25 minutes"
+    "timeToMake": "25 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-palak-paneer",
@@ -1566,7 +1607,8 @@ export const ADVISER_RECIPES = [
       "carbs": 42,
       "fat": 16
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-dal-tadka",
@@ -1602,7 +1644,8 @@ export const ADVISER_RECIPES = [
       "carbs": 62,
       "fat": 7
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-chole-bhatura-fit",
@@ -1640,7 +1683,8 @@ export const ADVISER_RECIPES = [
       "carbs": 70,
       "fat": 10
     },
-    "timeToMake": "22 minutes"
+    "timeToMake": "22 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-chicken-curry",
@@ -1676,7 +1720,8 @@ export const ADVISER_RECIPES = [
       "carbs": 48,
       "fat": 11
     },
-    "timeToMake": "25 minutes"
+    "timeToMake": "25 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-fish-curry",
@@ -1714,7 +1759,8 @@ export const ADVISER_RECIPES = [
       "carbs": 46,
       "fat": 9
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-egg-curry",
@@ -1753,7 +1799,8 @@ export const ADVISER_RECIPES = [
       "carbs": 42,
       "fat": 19
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-soya-curry",
@@ -1793,7 +1840,8 @@ export const ADVISER_RECIPES = [
       "carbs": 54,
       "fat": 8
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833998-877b37c2e5c6?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-paneer-tikka-bowl",
@@ -1831,7 +1879,8 @@ export const ADVISER_RECIPES = [
       "carbs": 52,
       "fat": 15
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-sambar-rice",
@@ -1867,7 +1916,8 @@ export const ADVISER_RECIPES = [
       "carbs": 68,
       "fat": 6
     },
-    "timeToMake": "22 minutes"
+    "timeToMake": "22 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-kadhi-khichdi",
@@ -1904,7 +1954,8 @@ export const ADVISER_RECIPES = [
       "carbs": 58,
       "fat": 9
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-bhindi-dal",
@@ -1941,7 +1992,8 @@ export const ADVISER_RECIPES = [
       "carbs": 56,
       "fat": 8
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-grilled-chicken-roti",
@@ -1977,7 +2029,8 @@ export const ADVISER_RECIPES = [
       "carbs": 28,
       "fat": 9
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-fish-tikka-plate",
@@ -2013,7 +2066,8 @@ export const ADVISER_RECIPES = [
       "carbs": 8,
       "fat": 12
     },
-    "timeToMake": "16 minutes"
+    "timeToMake": "16 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-kala-chana-curry",
@@ -2048,7 +2102,8 @@ export const ADVISER_RECIPES = [
       "carbs": 72,
       "fat": 6
     },
-    "timeToMake": "22 minutes"
+    "timeToMake": "22 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-baingan-bharta",
@@ -2085,7 +2140,8 @@ export const ADVISER_RECIPES = [
       "carbs": 54,
       "fat": 8
     },
-    "timeToMake": "22 minutes"
+    "timeToMake": "22 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-dal-makhani-light",
@@ -2122,7 +2178,8 @@ export const ADVISER_RECIPES = [
       "carbs": 64,
       "fat": 8
     },
-    "timeToMake": "25 minutes"
+    "timeToMake": "25 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-mutton-keema",
@@ -2159,7 +2216,8 @@ export const ADVISER_RECIPES = [
       "carbs": 42,
       "fat": 14
     },
-    "timeToMake": "24 minutes"
+    "timeToMake": "24 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-tofu-matar",
@@ -2198,7 +2256,8 @@ export const ADVISER_RECIPES = [
       "carbs": 54,
       "fat": 11
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-methi-malai-paneer",
@@ -2237,7 +2296,8 @@ export const ADVISER_RECIPES = [
       "carbs": 44,
       "fat": 16
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-lauki-kofta",
@@ -2274,7 +2334,8 @@ export const ADVISER_RECIPES = [
       "carbs": 54,
       "fat": 7
     },
-    "timeToMake": "22 minutes"
+    "timeToMake": "22 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833998-877b37c2e5c6?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-egg-biryani",
@@ -2311,7 +2372,8 @@ export const ADVISER_RECIPES = [
       "carbs": 62,
       "fat": 15
     },
-    "timeToMake": "25 minutes"
+    "timeToMake": "25 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-lobia-curry",
@@ -2347,7 +2409,8 @@ export const ADVISER_RECIPES = [
       "carbs": 69,
       "fat": 5
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-dum-aloo",
@@ -2383,7 +2446,8 @@ export const ADVISER_RECIPES = [
       "carbs": 66,
       "fat": 12
     },
-    "timeToMake": "22 minutes"
+    "timeToMake": "22 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-chicken-biryani",
@@ -2418,7 +2482,8 @@ export const ADVISER_RECIPES = [
       "carbs": 58,
       "fat": 12
     },
-    "timeToMake": "25 minutes"
+    "timeToMake": "25 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-gatte-ki-sabzi",
@@ -2455,7 +2520,8 @@ export const ADVISER_RECIPES = [
       "carbs": 56,
       "fat": 13
     },
-    "timeToMake": "24 minutes"
+    "timeToMake": "24 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-curd-rice",
@@ -2492,7 +2558,8 @@ export const ADVISER_RECIPES = [
       "carbs": 58,
       "fat": 7
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-masoor-dal",
@@ -2528,7 +2595,8 @@ export const ADVISER_RECIPES = [
       "carbs": 66,
       "fat": 6
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-nonveg-prawn-curry",
@@ -2565,7 +2633,8 @@ export const ADVISER_RECIPES = [
       "carbs": 46,
       "fat": 9
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "lu-veg-mixed-veg-korma",
@@ -2604,7 +2673,8 @@ export const ADVISER_RECIPES = [
       "carbs": 56,
       "fat": 9
     },
-    "timeToMake": "20 minutes"
+    "timeToMake": "20 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-sattu-drink",
@@ -2642,7 +2712,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 2
     },
-    "timeToMake": "4 minutes"
+    "timeToMake": "4 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-masala-makhana",
@@ -2678,7 +2749,8 @@ export const ADVISER_RECIPES = [
       "carbs": 23,
       "fat": 3
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-nonveg-egg-white-chaat",
@@ -2715,7 +2787,8 @@ export const ADVISER_RECIPES = [
       "carbs": 6,
       "fat": 1
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-bhel-puri-healthy",
@@ -2754,7 +2827,8 @@ export const ADVISER_RECIPES = [
       "carbs": 36,
       "fat": 4
     },
-    "timeToMake": "6 minutes"
+    "timeToMake": "6 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-paneer-tikka-skewers",
@@ -2791,7 +2865,8 @@ export const ADVISER_RECIPES = [
       "carbs": 8,
       "fat": 14
     },
-    "timeToMake": "8 minutes"
+    "timeToMake": "8 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-soya-kabab",
@@ -2829,7 +2904,8 @@ export const ADVISER_RECIPES = [
       "carbs": 18,
       "fat": 4
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-nonveg-chicken-skewers",
@@ -2862,7 +2938,8 @@ export const ADVISER_RECIPES = [
       "carbs": 2,
       "fat": 7
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-besan-toast",
@@ -2900,7 +2977,8 @@ export const ADVISER_RECIPES = [
       "carbs": 28,
       "fat": 5
     },
-    "timeToMake": "8 minutes"
+    "timeToMake": "8 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-masala-corn",
@@ -2936,7 +3014,8 @@ export const ADVISER_RECIPES = [
       "carbs": 32,
       "fat": 2
     },
-    "timeToMake": "6 minutes"
+    "timeToMake": "6 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-roasted-chana-tea",
@@ -2970,7 +3049,8 @@ export const ADVISER_RECIPES = [
       "carbs": 26,
       "fat": 4
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-moong-dal-dahi-vada",
@@ -3006,7 +3086,8 @@ export const ADVISER_RECIPES = [
       "carbs": 28,
       "fat": 4
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-ragi-cookies-tea",
@@ -3039,7 +3120,8 @@ export const ADVISER_RECIPES = [
       "carbs": 28,
       "fat": 5
     },
-    "timeToMake": "4 minutes"
+    "timeToMake": "4 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-sprouts-tikki",
@@ -3076,7 +3158,8 @@ export const ADVISER_RECIPES = [
       "carbs": 22,
       "fat": 3
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-nonveg-egg-roll-wheat",
@@ -3113,7 +3196,8 @@ export const ADVISER_RECIPES = [
       "carbs": 26,
       "fat": 12
     },
-    "timeToMake": "8 minutes"
+    "timeToMake": "8 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-masala-papad",
@@ -3147,7 +3231,8 @@ export const ADVISER_RECIPES = [
       "carbs": 20,
       "fat": 1
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-dry-fruit-ladoo",
@@ -3179,7 +3264,8 @@ export const ADVISER_RECIPES = [
       "carbs": 22,
       "fat": 5
     },
-    "timeToMake": "1 minute"
+    "timeToMake": "1 minute",
+    "imageUrl": "https://images.unsplash.com/photo-1519996529931-28324d5a630e?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-methi-muthia",
@@ -3216,7 +3302,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 4
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "ev-veg-soya-chaap",
@@ -3253,7 +3340,8 @@ export const ADVISER_RECIPES = [
       "carbs": 22,
       "fat": 6
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-moong-khichdi",
@@ -3291,7 +3379,8 @@ export const ADVISER_RECIPES = [
       "carbs": 56,
       "fat": 6
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-dalia-khichdi",
@@ -3331,7 +3420,8 @@ export const ADVISER_RECIPES = [
       "carbs": 52,
       "fat": 6
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-lauki-chana-dal",
@@ -3370,7 +3460,8 @@ export const ADVISER_RECIPES = [
       "carbs": 54,
       "fat": 5
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833998-877b37c2e5c6?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-nonveg-tandoori-chicken",
@@ -3405,7 +3496,8 @@ export const ADVISER_RECIPES = [
       "carbs": 10,
       "fat": 8
     },
-    "timeToMake": "16 minutes"
+    "timeToMake": "16 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-nonveg-steamed-fish",
@@ -3441,7 +3533,8 @@ export const ADVISER_RECIPES = [
       "carbs": 32,
       "fat": 6
     },
-    "timeToMake": "16 minutes"
+    "timeToMake": "16 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-paneer-bhurji-roti",
@@ -3480,7 +3573,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 14
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-palak-corn",
@@ -3516,7 +3610,8 @@ export const ADVISER_RECIPES = [
       "carbs": 50,
       "fat": 5
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-turai-sabzi",
@@ -3555,7 +3650,8 @@ export const ADVISER_RECIPES = [
       "carbs": 48,
       "fat": 4
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-nonveg-egg-bhurji-dinner",
@@ -3592,7 +3688,8 @@ export const ADVISER_RECIPES = [
       "carbs": 20,
       "fat": 15
     },
-    "timeToMake": "10 minutes"
+    "timeToMake": "10 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-tofu-vegetable-stirfry",
@@ -3632,7 +3729,8 @@ export const ADVISER_RECIPES = [
       "carbs": 26,
       "fat": 11
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-oats-khichdi",
@@ -3670,7 +3768,8 @@ export const ADVISER_RECIPES = [
       "carbs": 46,
       "fat": 5
     },
-    "timeToMake": "14 minutes"
+    "timeToMake": "14 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-masoor-soup",
@@ -3707,7 +3806,8 @@ export const ADVISER_RECIPES = [
       "carbs": 46,
       "fat": 2
     },
-    "timeToMake": "14 minutes"
+    "timeToMake": "14 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-nonveg-chicken-soup",
@@ -3741,7 +3841,8 @@ export const ADVISER_RECIPES = [
       "carbs": 4,
       "fat": 6
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-methi-thepla-dahi",
@@ -3776,7 +3877,8 @@ export const ADVISER_RECIPES = [
       "carbs": 40,
       "fat": 8
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-matar-paneer-light",
@@ -3813,7 +3915,8 @@ export const ADVISER_RECIPES = [
       "carbs": 32,
       "fat": 14
     },
-    "timeToMake": "16 minutes"
+    "timeToMake": "16 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-mixed-veg-poriyal",
@@ -3847,7 +3950,8 @@ export const ADVISER_RECIPES = [
       "carbs": 52,
       "fat": 4
     },
-    "timeToMake": "16 minutes"
+    "timeToMake": "16 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-soya-chunk-pulao",
@@ -3885,7 +3989,8 @@ export const ADVISER_RECIPES = [
       "carbs": 46,
       "fat": 7
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-nonveg-grilled-fish-tikka",
@@ -3920,7 +4025,8 @@ export const ADVISER_RECIPES = [
       "carbs": 4,
       "fat": 10
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-baingan-aloo-bharta",
@@ -3957,7 +4063,8 @@ export const ADVISER_RECIPES = [
       "carbs": 36,
       "fat": 5
     },
-    "timeToMake": "16 minutes"
+    "timeToMake": "16 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-chana-dal-palak",
@@ -3992,7 +4099,8 @@ export const ADVISER_RECIPES = [
       "carbs": 50,
       "fat": 6
     },
-    "timeToMake": "18 minutes"
+    "timeToMake": "18 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-nonveg-egg-curry-light",
@@ -4028,7 +4136,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 13
     },
-    "timeToMake": "14 minutes"
+    "timeToMake": "14 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-pumpkin-sabzi",
@@ -4064,7 +4173,8 @@ export const ADVISER_RECIPES = [
       "carbs": 48,
       "fat": 4
     },
-    "timeToMake": "15 minutes"
+    "timeToMake": "15 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-capsicum-besan",
@@ -4102,7 +4212,8 @@ export const ADVISER_RECIPES = [
       "carbs": 48,
       "fat": 6
     },
-    "timeToMake": "12 minutes"
+    "timeToMake": "12 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "di-veg-curd-rice-pomegranate",
@@ -4138,7 +4249,8 @@ export const ADVISER_RECIPES = [
       "carbs": 52,
       "fat": 6
     },
-    "timeToMake": "8 minutes"
+    "timeToMake": "8 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-haldi-doodh",
@@ -4177,7 +4289,8 @@ export const ADVISER_RECIPES = [
       "carbs": 12,
       "fat": 5
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-badam-cardamom-milk",
@@ -4215,7 +4328,8 @@ export const ADVISER_RECIPES = [
       "carbs": 14,
       "fat": 7
     },
-    "timeToMake": "6 minutes"
+    "timeToMake": "6 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-cinnamon-water",
@@ -4250,7 +4364,8 @@ export const ADVISER_RECIPES = [
       "carbs": 9,
       "fat": 0
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-chamomile-walnuts",
@@ -4286,7 +4401,8 @@ export const ADVISER_RECIPES = [
       "carbs": 3,
       "fat": 7
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-saunf-ajwain-water",
@@ -4321,7 +4437,8 @@ export const ADVISER_RECIPES = [
       "carbs": 3,
       "fat": 0
     },
-    "timeToMake": "4 minutes"
+    "timeToMake": "4 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-ashwagandha-milk",
@@ -4356,7 +4473,8 @@ export const ADVISER_RECIPES = [
       "carbs": 12,
       "fat": 6
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-warm-curd",
@@ -4389,7 +4507,8 @@ export const ADVISER_RECIPES = [
       "carbs": 5,
       "fat": 4
     },
-    "timeToMake": "2 minutes"
+    "timeToMake": "2 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-soaked-mamra-badam",
@@ -4423,7 +4542,8 @@ export const ADVISER_RECIPES = [
       "carbs": 2,
       "fat": 4
     },
-    "timeToMake": "2 minutes"
+    "timeToMake": "2 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-nutmeg-milk",
@@ -4456,7 +4576,8 @@ export const ADVISER_RECIPES = [
       "carbs": 11,
       "fat": 5
     },
-    "timeToMake": "4 minutes"
+    "timeToMake": "4 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-almond-milk-sleep",
@@ -4492,7 +4613,8 @@ export const ADVISER_RECIPES = [
       "carbs": 4,
       "fat": 6
     },
-    "timeToMake": "4 minutes"
+    "timeToMake": "4 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-ginger-lemon-water",
@@ -4526,7 +4648,8 @@ export const ADVISER_RECIPES = [
       "carbs": 3,
       "fat": 0
     },
-    "timeToMake": "5 minutes"
+    "timeToMake": "5 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bt-veg-makhana-milk",
@@ -4561,7 +4684,8 @@ export const ADVISER_RECIPES = [
       "carbs": 24,
       "fat": 4
     },
-    "timeToMake": "8 minutes"
+    "timeToMake": "8 minutes",
+    "imageUrl": "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
@@ -4692,4 +4816,3 @@ export function getMealSlotFromTime(date = new Date()) {
   // After 22:00 or before 5:00 -> Bedtime
   return { id: 'bedtime', label: 'Bedtime', icon: '✨', range: 'After 22:00' };
 }
-
