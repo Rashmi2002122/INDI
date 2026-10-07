@@ -210,7 +210,8 @@ export default function PersonalFoodAdviser({ onBack }) {
           slot: selectedSlotId,
           dietType: profile.dietType,
           goal: profile.goal,
-          limit: '3'
+          limit: fullDayView ? '3' : '2',
+          offset: seed.toString()
         });
         if (profile.allergies?.length) {
           params.set('allergies', profile.allergies.join(','));
@@ -235,15 +236,15 @@ export default function PersonalFoodAdviser({ onBack }) {
 
     fetchRecipes();
     return () => { isCancelled = true; };
-  }, [selectedSlotId, profile.dietType, profile.goal, profile.allergies, profile.eatenFoods, seed]);
+  }, [selectedSlotId, profile.dietType, profile.goal, profile.allergies, profile.eatenFoods, seed, fullDayView]);
 
   const currentSlotMeta = ALL_SLOTS.find(s => s.id === selectedSlotId) || ALL_SLOTS[0];
   const recommendedRecipes = useMemo(() => {
     if (backendRecipes && backendRecipes.length > 0) {
       return backendRecipes;
     }
-    return getRecommendedRecipes(selectedSlotId, profile, 3);
-  }, [backendRecipes, selectedSlotId, profile, seed]);
+    return getRecommendedRecipes(selectedSlotId, profile, fullDayView ? 3 : 2, seed);
+  }, [backendRecipes, selectedSlotId, profile, seed, fullDayView]);
 
   // Greeting Message generator
   const getGreeting = () => {
@@ -294,7 +295,10 @@ export default function PersonalFoodAdviser({ onBack }) {
             </h2>
           </div>
           <button
-            onClick={() => setSeed(s => s + 1)}
+            onClick={() => {
+              setSeed(s => s + 1);
+              setCardModes({});
+            }}
             className="p-2 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-white"
             title="Shuffle Options"
           >
@@ -509,6 +513,8 @@ export default function PersonalFoodAdviser({ onBack }) {
                 onClick={() => {
                   setSelectedSlotId(slot.id);
                   setFullDayView(false);
+                  setSeed(0);
+                  setCardModes({});
                 }}
                 className={`px-3 py-2 rounded-2xl flex-shrink-0 text-left border transition-all ${
                   isSelected
@@ -789,7 +795,10 @@ export default function PersonalFoodAdviser({ onBack }) {
           </p>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setSeed(s => s + 1)}
+              onClick={() => {
+                setSeed(s => s + 1);
+                setCardModes({});
+              }}
               className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm"
             >
               <RefreshCw className="w-3.5 h-3.5" /> Give Me Another Option
