@@ -19,7 +19,10 @@ import {
   ArrowLeft,
   Calendar,
   Heart,
-  Info
+  Info,
+  ShoppingBag,
+  ExternalLink,
+  Copy
 } from 'lucide-react';
 import { 
   ADVISER_RECIPES, 
@@ -28,6 +31,53 @@ import {
   ADVISER_TIPS 
 } from '../data/recipesAdviserDatabase';
 import { API_BASE } from '../services/api';
+
+/**
+ * Simplify a dish name into an optimal restaurant search term for food delivery apps (Zomato/Swiggy)
+ */
+function getCleanDishSearchQuery(recipeName) {
+  if (!recipeName) return 'Healthy Meal';
+  return recipeName
+    .replace(/^(High-Protein|Slow-Cooked|Comforting|Turmeric & Pepper|Herb|Zesty|Warm|Chilled|Clean|Organic|Pan-Seared|Tawa)\s+/i, '')
+    .replace(/\s+(with|accompanied by|alongside|in).*$/i, '')
+    .trim();
+}
+
+/**
+ * Generate goal-tailored restaurant cooking instructions
+ */
+function getRestaurantInstructions(goal = 'fat_loss', allergies = []) {
+  const g = (goal || 'fat_loss').toLowerCase();
+  const notes = [];
+
+  if (g.includes('fat_loss')) {
+    notes.push("Cook with minimal oil / ghee (request 1/2 tsp max).");
+    notes.push("Strictly NO added cream, butter garnish, or mayonnaise.");
+    notes.push("Keep any gravies, dressings, or sauces on the side.");
+    notes.push("Choose tandoori, grilled, or roasted over deep-fried.");
+  } else if (g.includes('muscle_gain')) {
+    notes.push("Request an extra portion of protein (paneer, eggs, chicken, or tofu).");
+    notes.push("Keep gravy light; avoid sugary glazes or heavy cornstarch.");
+    notes.push("Pair with whole wheat roti or steamed rice rather than butter naan.");
+  } else if (g.includes('low_sugar')) {
+    notes.push("STRICTLY ZERO ADDED SUGAR or sweet chutneys / sweet curries.");
+    notes.push("Avoid cornstarch / maida thickening in the gravies.");
+    notes.push("Include fresh lemon wedges and extra green salad.");
+  } else if (g.includes('heart_healthy')) {
+    notes.push("STRICTLY LOW SODIUM / LOW SALT. No added MSG or table salt.");
+    notes.push("Cook in light vegetable/olive oil; no dalda/vanaspati.");
+    notes.push("No salted papad, pickles, or salted butter garnish.");
+  } else {
+    notes.push("Prepare fresh with light oil/butter.");
+    notes.push("Avoid artificial food colorings or excessive heavy cream.");
+  }
+
+  if (allergies && allergies.length > 0) {
+    notes.push(`CRITICAL ALLERGY ALERT: Strictly NO ${allergies.map(a => a.toUpperCase()).join(', ')}!`);
+  }
+
+  return notes;
+}
 
 const ADVISER_PROFILE_KEY = 'indi_food_adviser_profile';
 
@@ -83,6 +133,23 @@ export default function PersonalFoodAdviser({ onBack }) {
   const [allergyInput, setAllergyInput] = useState('');
   const [eatenInput, setEatenInput] = useState('');
   const [seed, setSeed] = useState(0); // Shuffle seed
+  const [cardModes, setCardModes] = useState({}); // { [recipeId]: 'cook' | 'order' | null }
+  const [copiedId, setCopiedId] = useState(null);
+
+  const handleSetMode = (recipeId, mode) => {
+    setCardModes(prev => ({
+      ...prev,
+      [recipeId]: prev[recipeId] === mode ? null : mode
+    }));
+  };
+
+  const handleCopyNote = (recipeId, text) => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedId(recipeId);
+      setTimeout(() => setCopiedId(null), 2000);
+    }
+  };
 
   // Update time slot on mount
   useEffect(() => {
@@ -484,89 +551,225 @@ export default function PersonalFoodAdviser({ onBack }) {
             </p>
           </div>
         ) : (
-          recommendedRecipes.slice(0, fullDayView ? 3 : 2).map((recipe, idx) => (
-            <div 
-              key={recipe.id}
-              className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-4 hover:shadow-md transition-shadow relative overflow-hidden"
-            >
-              {/* Option Number Tag */}
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  Option {idx + 1}
-                </span>
+          recommendedRecipes.slice(0, fullDayView ? 3 : 2).map((recipe, idx) => {
+            const activeMode = cardModes[recipe.id] || null;
+            const dishSearchQuery = getCleanDishSearchQuery(recipe.name);
+            const restaurantInstructions = getRestaurantInstructions(profile.goal, profile.allergies);
+            const restaurantNoteText = `Special Cooking Request for Chef:\n` +
+              restaurantInstructions.map(i => `• ${i}`).join('\n');
 
-                <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-slate-400" /> {recipe.timeToMake}
-                </span>
-              </div>
+            return (
+              <div 
+                key={recipe.id}
+                className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-4 hover:shadow-md transition-shadow relative overflow-hidden"
+              >
+                {/* Option Number Tag */}
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    Option {idx + 1}
+                  </span>
 
-              {/* Recipe Title & Why It Fits */}
-              <div className="space-y-1.5">
-                <h3 className="text-base font-black text-slate-900 leading-snug">
-                  {recipe.name}
-                </h3>
-                <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-200/60 text-xs font-medium text-slate-700 leading-relaxed">
-                  <span className="font-bold text-emerald-700">Why it fits your goal: </span>
-                  {recipe.whyItFits}
+                  <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5 text-slate-400" /> {recipe.timeToMake}
+                  </span>
                 </div>
-              </div>
 
-              {/* Ingredients List */}
-              <div className="space-y-1.5">
-                <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-400">
-                  Ingredients with Quantities
-                </h4>
-                <ul className="space-y-1 text-xs text-slate-700 font-medium bg-white rounded-xl">
-                  {recipe.ingredients.map((ing, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="text-emerald-500 font-bold">•</span>
-                      <span>{ing}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                {/* Recipe Title & Why It Fits */}
+                <div className="space-y-1.5">
+                  <h3 className="text-base font-black text-slate-900 leading-snug">
+                    {recipe.name}
+                  </h3>
+                  <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-200/60 text-xs font-medium text-slate-700 leading-relaxed">
+                    <span className="font-bold text-emerald-700">Why it fits your goal: </span>
+                    {recipe.whyItFits}
+                  </div>
+                </div>
 
-              {/* Step-by-Step Method */}
-              <div className="space-y-1.5">
-                <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-400">
-                  Method (Quick Steps)
-                </h4>
-                <ol className="space-y-1.5 text-xs text-slate-700 font-medium">
-                  {recipe.method.map((step, sIdx) => (
-                    <li key={sIdx} className="flex items-start gap-2.5">
-                      <span className="w-4 h-4 rounded-full bg-slate-100 text-slate-700 text-[10px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                        {sIdx + 1}
-                      </span>
-                      <span className="leading-relaxed">{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
+                {/* Approx Nutrition Bar */}
+                <div className="bg-slate-900 text-white rounded-2xl p-3 flex items-center justify-between text-center">
+                  <div>
+                    <div className="text-[10px] font-semibold text-slate-400">Approx. Cal</div>
+                    <div className="text-xs font-black text-emerald-400">{recipe.nutrition.calories} kcal</div>
+                  </div>
+                  <div className="w-[1px] h-6 bg-slate-800" />
+                  <div>
+                    <div className="text-[10px] font-semibold text-slate-400">Protein</div>
+                    <div className="text-xs font-black text-white">{recipe.nutrition.protein}g</div>
+                  </div>
+                  <div className="w-[1px] h-6 bg-slate-800" />
+                  <div>
+                    <div className="text-[10px] font-semibold text-slate-400">Carbs</div>
+                    <div className="text-xs font-black text-white">{recipe.nutrition.carbs}g</div>
+                  </div>
+                  <div className="w-[1px] h-6 bg-slate-800" />
+                  <div>
+                    <div className="text-[10px] font-semibold text-slate-400">Fat</div>
+                    <div className="text-xs font-black text-white">{recipe.nutrition.fat}g</div>
+                  </div>
+                </div>
 
-              {/* Approx Nutrition Bar */}
-              <div className="bg-slate-900 text-white rounded-2xl p-3 flex items-center justify-between text-center">
-                <div>
-                  <div className="text-[10px] font-semibold text-slate-400">Approx. Cal</div>
-                  <div className="text-xs font-black text-emerald-400">{recipe.nutrition.calories} kcal</div>
+                {/* CHOICE SELECTOR: Make by Yourself vs Order Online */}
+                <div className="space-y-3 pt-1">
+                  <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+                    <span>How would you like this meal?</span>
+                    {activeMode && (
+                      <button
+                        onClick={() => handleSetMode(recipe.id, null)}
+                        className="text-[10px] text-slate-400 hover:text-slate-700 underline font-semibold"
+                      >
+                        Hide details
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-2xl">
+                    <button
+                      onClick={() => handleSetMode(recipe.id, 'cook')}
+                      className={`py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 ${
+                        activeMode === 'cook'
+                          ? 'bg-white text-emerald-950 shadow-sm border border-slate-200/80 font-black'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      <ChefHat className={`w-4 h-4 ${activeMode === 'cook' ? 'text-emerald-600' : 'text-slate-400'}`} />
+                      Make Yourself
+                    </button>
+
+                    <button
+                      onClick={() => handleSetMode(recipe.id, 'order')}
+                      className={`py-2 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 ${
+                        activeMode === 'order'
+                          ? 'bg-white text-rose-950 shadow-sm border border-slate-200/80 font-black'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      <ShoppingBag className={`w-4 h-4 ${activeMode === 'order' ? 'text-rose-500' : 'text-slate-400'}`} />
+                      Order Online
+                    </button>
+                  </div>
+
+                  {/* PROMPT WHEN NONE SELECTED */}
+                  {!activeMode && (
+                    <p className="text-[11px] text-center text-slate-400 font-medium italic pt-0.5">
+                      Tap "Make Yourself" for home recipe steps or "Order Online" for restaurant delivery.
+                    </p>
+                  )}
+
+                  {/* OPTION A: Make by Yourself -> Ingredients & Step-by-Step Method */}
+                  {activeMode === 'cook' && (
+                    <div className="space-y-4 pt-2 border-t border-slate-100 animate-in fade-in duration-200">
+                      <div className="flex items-center justify-between text-xs text-slate-500 font-bold">
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5 text-emerald-600" />
+                          Est. Time: {recipe.timeToMake}
+                        </span>
+                        <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full text-[10px] font-black border border-emerald-200/60">
+                          Home Kitchen
+                        </span>
+                      </div>
+
+                      {/* Ingredients List */}
+                      <div className="space-y-1.5">
+                        <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-400">
+                          Ingredients with Quantities
+                        </h4>
+                        <ul className="space-y-1 text-xs text-slate-700 font-medium bg-slate-50/70 p-3 rounded-2xl border border-slate-100">
+                          {recipe.ingredients.map((ing, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <span className="text-emerald-500 font-bold">•</span>
+                              <span>{ing}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Step-by-Step Method */}
+                      <div className="space-y-1.5">
+                        <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-400">
+                          How to Prepare (Quick Steps)
+                        </h4>
+                        <ol className="space-y-2 text-xs text-slate-700 font-medium">
+                          {recipe.method.map((step, sIdx) => (
+                            <li key={sIdx} className="flex items-start gap-2.5">
+                              <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
+                                {sIdx + 1}
+                              </span>
+                              <span className="leading-relaxed">{step}</span>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* OPTION B: Order Online -> Goal-based Cooking Instructions & Zomato / Swiggy */}
+                  {activeMode === 'order' && (
+                    <div className="space-y-3.5 pt-2 border-t border-slate-100 animate-in fade-in duration-200">
+                      <div className="bg-amber-50/90 border border-amber-200/90 rounded-2xl p-3.5 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                            Cooking Instructions for Restaurant
+                          </span>
+                          <button
+                            onClick={() => handleCopyNote(recipe.id, restaurantNoteText)}
+                            className="text-[10px] font-bold text-amber-900 bg-amber-100 hover:bg-amber-200 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
+                          >
+                            {copiedId === recipe.id ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                            {copiedId === recipe.id ? 'Copied Note!' : 'Copy Note'}
+                          </button>
+                        </div>
+
+                        <ul className="text-xs text-amber-950 font-medium space-y-1.5">
+                          {restaurantInstructions.map((inst, i) => (
+                            <li key={i} className="flex items-start gap-1.5">
+                              <span className="text-amber-600 font-bold">✓</span>
+                              <span>{inst}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <p className="text-[10px] text-amber-800/80 italic pt-1 border-t border-amber-200/50">
+                          💡 Paste this note into the restaurant instructions box during checkout on Zomato or Swiggy!
+                        </p>
+                      </div>
+
+                      {/* Food Delivery App Redirect Buttons */}
+                      <div className="space-y-2">
+                        <div className="text-[11px] font-bold text-slate-600 flex items-center justify-between">
+                          <span>Search & order "{dishSearchQuery}" on:</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2.5">
+                          {/* Zomato */}
+                          <a
+                            href={`https://www.zomato.com/search?q=${encodeURIComponent(dishSearchQuery)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-3 bg-[#E23744] hover:bg-[#d02835] text-white rounded-2xl font-black text-xs flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                          >
+                            <span className="tracking-wide font-black">ZOMATO</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+
+                          {/* Swiggy */}
+                          <a
+                            href={`https://www.swiggy.com/search?query=${encodeURIComponent(dishSearchQuery)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-3 bg-[#FC8019] hover:bg-[#eb7410] text-white rounded-2xl font-black text-xs flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                          >
+                            <span className="tracking-wide font-black">SWIGGY</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="w-[1px] h-6 bg-slate-800" />
-                <div>
-                  <div className="text-[10px] font-semibold text-slate-400">Protein</div>
-                  <div className="text-xs font-black text-white">{recipe.nutrition.protein}g</div>
-                </div>
-                <div className="w-[1px] h-6 bg-slate-800" />
-                <div>
-                  <div className="text-[10px] font-semibold text-slate-400">Carbs</div>
-                  <div className="text-xs font-black text-white">{recipe.nutrition.carbs}g</div>
-                </div>
-                <div className="w-[1px] h-6 bg-slate-800" />
-                <div>
-                  <div className="text-[10px] font-semibold text-slate-400">Fat</div>
-                  <div className="text-xs font-black text-white">{recipe.nutrition.fat}g</div>
-                </div>
+
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
 
