@@ -27,8 +27,6 @@ const ACTIVE_TAB = {
   scanner: 'scanner',
   result: 'result'
 };
-const FRESH_FOOD_SOURCE = 'USDA Reference Data (Development Data)';
-
 const getStoredGoals = () => {
   try {
     const savedGoals = localStorage.getItem(USER_GOALS_KEY);
@@ -39,24 +37,6 @@ const getStoredGoals = () => {
   }
 };
 
-const buildFallbackFreshFood = (nutData) => ({
-  id: nutData.id,
-  name: nutData.foodName,
-  category: nutData.category,
-  emoji: '🥬',
-  servingSize: nutData.servingSize || '100g',
-  source: nutData.source || FRESH_FOOD_SOURCE,
-  nutriments: {
-    energyServing: nutData.calories,
-    proteinServing: nutData.protein,
-    carbohydratesServing: nutData.carbohydrates,
-    fatServing: nutData.fat,
-    fiberServing: nutData.fiber,
-    sugarsServing: nutData.sugar,
-    sodiumServing: nutData.sodium
-  }
-});
-
 export default function App() {
   const [scannerMode, setScannerMode] = useState(SCANNER_MODE.choice);
   const [activeTab, setActiveTab] = useState(ACTIVE_TAB.scanner);
@@ -64,12 +44,6 @@ export default function App() {
   const [scannedProduct, setScannedProduct] = useState(null);
   const [evaluation, setEvaluation] = useState(null);
   const [alternatives, setAlternatives] = useState([]);
-
-  const [freshFood, setFreshFood] = useState(null);
-  const [freshEvaluation, setFreshEvaluation] = useState(null);
-  const [freshPreparation, setFreshPreparation] = useState(DEFAULT_PREPARATION);
-  const [freshAlternatives, setFreshAlternatives] = useState([]);
-  const [freshRecipes, setFreshRecipes] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -109,11 +83,6 @@ export default function App() {
   const refreshCurrentEvaluation = () => {
     if (scannedProduct && scannerMode === SCANNER_MODE.packaged) {
       handleBarcodeScanned(scannedProduct.barcode);
-      return;
-    }
-
-    if (freshFood && scannerMode === SCANNER_MODE.fresh) {
-      handleSelectFreshFood(freshFood.id, freshPreparation);
     }
   };
 
@@ -253,97 +222,6 @@ export default function App() {
     }
   };
 
-  const loadFreshFoodRecipes = async (foodId) => {
-    try {
-      const response = await fetch(`${API_BASE}/fresh-food/${encodeURIComponent(foodId)}/recipes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ goals: selectedGoals })
-      });
-
-      if (!response.ok) {
-        return;
-      }
-
-      const data = await response.json();
-      setFreshRecipes(data.recipes || []);
-    } catch (error) {
-      console.warn('Failed to load fresh food recipes', error);
-    }
-  };
-
-  const loadFreshFoodAlternatives = async (foodId) => {
-    try {
-      const response = await fetch(`${API_BASE}/fresh-food/${encodeURIComponent(foodId)}/alternatives`);
-      if (!response.ok) {
-        return;
-      }
-
-      const data = await response.json();
-      setFreshAlternatives(data.alternatives || []);
-    } catch (error) {
-      console.warn('Failed to load fresh food alternatives', error);
-    }
-  };
-
-  const handleSelectFreshFood = async (foodId, preparation = DEFAULT_PREPARATION, customImage = null) => {
-    if (!foodId) {
-      return;
-    }
-
-    setLoading(true);
-    setErrorMsg(null);
-    setScannerMode(SCANNER_MODE.fresh);
-    setFreshPreparation(preparation);
-
-    try {
-      const response = await fetch(`${API_BASE}/fresh-food/${encodeURIComponent(foodId)}/evaluate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          preparation,
-          goals: selectedGoals
-        })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const foodWithImage = customImage ? { ...data.food, userUploadedImage: customImage } : data.food;
-
-        setFreshFood(foodWithImage);
-        setFreshEvaluation(data.evaluation);
-        await Promise.all([
-          loadFreshFoodRecipes(foodId),
-          loadFreshFoodAlternatives(foodId)
-        ]);
-        setActiveTab(ACTIVE_TAB.result);
-        return;
-      }
-
-      const fallbackResponse = await fetch(`${API_BASE}/foods/${encodeURIComponent(foodId)}`);
-      if (!fallbackResponse.ok) {
-        setErrorMsg('Nutrition information is not available for this food yet.');
-        return;
-      }
-
-      const nutData = await fallbackResponse.json();
-      const constructedFood = buildFallbackFreshFood(nutData);
-
-      setFreshFood(constructedFood);
-      setFreshEvaluation({
-        overallStatus: 'GOOD MATCH',
-        goals: [],
-        disclaimer: 'Notice: HealthScan provides general nutritional guidance for development/testing and does not replace medical advice.'
-      });
-      setActiveTab(ACTIVE_TAB.result);
-    } catch (error) {
-      console.error('Fresh food evaluation error', error);
-      setErrorMsg('Nutrition information is not available for this food yet.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
       <Header
@@ -443,11 +321,7 @@ export default function App() {
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
         onSelectProduct={(idOrBarcode) => {
-          if (idOrBarcode && isNaN(Number(idOrBarcode)) && idOrBarcode.length < 20) {
-            handleSelectFreshFood(idOrBarcode, DEFAULT_PREPARATION);
-          } else {
-            handleBarcodeScanned(idOrBarcode);
-          }
+          handleBarcodeScanned(idOrBarcode);
         }}
       />
 
